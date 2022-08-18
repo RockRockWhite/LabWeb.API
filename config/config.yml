@@ -1,0 +1,22 @@
+AppDebug: true   # 调试模式
+
+HttpServer:
+  Port: ":8080" # 网站运行端口号
+
+DataBase:
+  Host: "127.0.0.1"
+  Port: "3306"
+  Username: "root"
+  Password: "white"
+  DBName: "white_blog"
+
+Logger:
+  LogFile: "white_blog.log"
+
+Jwt:
+  Secret: "white_blog_jwt_secret"
+  Issuer: "rockrockwhite.cn"
+  ExpireDays: 14
+
+Document:
+  Url: "https://github.com/RockRockWhite/WebApi"
