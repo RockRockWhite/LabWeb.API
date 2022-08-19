@@ -11,12 +11,12 @@ DataBase:
   DBName: "lab_web_sample"
 
 Logger:
-  LogFile: "white_blog.log"
+  LogFile: "LabWeb.API.log"
 
 Jwt:
-  Secret: "white_blog_jwt_secret"
-  Issuer: "rockrockwhite.cn"
+  Secret: "lab_web_jwt_secret"
+  Issuer: "fzusosdrock"
   ExpireDays: 14
 
 Document:
-  Url: "https://github.com/RockRockWhite/WebApi"
+  Url: "https://github.com/RockRockWhite/"
