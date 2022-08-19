@@ -28,11 +28,10 @@ func InitApiRouter() *gin.Engine {
 
 	user := router.Group("/users")
 	{
-		user.GET("/:id", controllers.GetUser)
+		user.GET("/:username", controllers.GetUser)
 		user.POST("/", controllers.AddUser)
-		user.PUT("/:id", middlewares.JwtAuth(false), controllers.PutUser)
-		user.PATCH("/:id", middlewares.JwtAuth(false), controllers.PatchUser)
-		user.DELETE("/:id", middlewares.JwtAuth(false), controllers.DeleteUser)
+		user.PATCH("/:username", middlewares.JwtAuth(false), controllers.PatchUser)
+		user.DELETE("/:username", middlewares.JwtAuth(false), controllers.DeleteUser)
 	}
 
 	token := router.Group("/token")

@@ -30,7 +30,11 @@ func CreateToken(c *gin.Context) {
 		return
 	}
 
-	user := userRepository.GetUserByNickName(tokenDto.Username)
+	user, err := userRepository.GetUserByName(tokenDto.Username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	// 验证密码
 	if !utils.ValifyPasswordHash(tokenDto.Password, user.Salt, user.PasswordHash) {

@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"github.com/RockRockWhite/LabWeb.API/entities"
+	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -37,68 +38,54 @@ func NewUserRepository(autoMigrate bool) *UserRepository {
 	return &repository
 }
 
-// GetUser 获得用户信息
-func (repository *UserRepository) GetUser(id uint) *entities.User {
-	if !repository.UserExists(id) {
-		panic(fmt.Errorf("user id %v not exists", id))
-	}
-
+// GetUserByName 通过用户名获得信息
+func (repository *UserRepository) GetUserByName(username string) (*entities.User, error) {
+	var err error
 	var user entities.User
-	if result := repository.db.First(&user, id); result.Error != nil {
-		panic(fmt.Errorf("failed to get user id: %v", id))
+
+	if result := repository.db.Where(&entities.User{Username: username}).First(&user); result.Error != nil {
+		err = multierror.Append(err, fmt.Errorf("failed to get user: %v, error: %s", username, err.Error()))
 	}
 
-	return &user
+	return &user, err
 }
 
 // AddUser 添加用户
-func (repository *UserRepository) AddUser(user *entities.User) uint {
+func (repository *UserRepository) AddUser(user *entities.User) (uint, error) {
+	var err error
 	if result := repository.db.Create(user); result.Error != nil {
-		panic(fmt.Errorf("failed to add user %+v : %s", user, result.Error))
+		err = multierror.Append(err, fmt.Errorf("failed to add user %+v : %s", user, result.Error))
 	}
 
-	return user.ID
+	return user.ID, err
 }
 
 // UpdateUser 更新用户信息
-func (repository *UserRepository) UpdateUser(user *entities.User) {
+func (repository *UserRepository) UpdateUser(user *entities.User) error {
+	var err error
 	if result := repository.db.Save(user); result.Error != nil {
-		panic(fmt.Errorf("failed to update user %+v : %s", user, result.Error))
+		err = multierror.Append(err, fmt.Errorf("failed to update user %+v : %s", user, result.Error))
 	}
+
+	return err
 }
 
-// DeleteUser 删除用户
-func (repository *UserRepository) DeleteUser(id uint) {
-	if !repository.UserExists(id) {
-		panic(fmt.Errorf("user id %v not exists", id))
+// DeleteUserByName 通过用户名删除用户
+func (repository *UserRepository) DeleteUserByName(username string) error {
+	var err error
+	if result := repository.db.Where("username = ?", username).Delete(&entities.User{}); result.Error != nil {
+		err = multierror.Append(err, fmt.Errorf("failed to delete user %+v : %s", username, result.Error))
 	}
 
-	if result := repository.db.Delete(&entities.User{}, id); result.Error != nil {
-		panic(fmt.Errorf("failed to delete user id %v : %s", id, result.Error))
-	}
+	return err
 }
 
-// UserExists 判断用户是否存在
-func (repository *UserRepository) UserExists(id uint) bool {
+// UserIdExists 判断用户id是否存在
+func (repository *UserRepository) UserIdExists(id uint) bool {
 	var user entities.User
 	result := repository.db.First(&user, id)
 
 	return result.RowsAffected >= 1
-}
-
-// GetUserByNickName 通过昵称获得用户信息
-func (repository *UserRepository) GetUserByNickName(username string) *entities.User {
-
-	if !repository.UsernameExists(username) {
-		panic(fmt.Errorf("user nick name %v not exists", username))
-	}
-
-	var user entities.User
-	if result := repository.db.Where(&entities.User{Username: username}).First(&user); result.Error != nil {
-		panic(fmt.Errorf("failed to get user username: %v", username))
-	}
-
-	return &user
 }
 
 // UsernameExists 判断用户昵称是否存在
