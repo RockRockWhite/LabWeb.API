@@ -7,8 +7,8 @@ DataBase:
   Host: "127.0.0.1"
   Port: "3306"
   Username: "root"
-  Password: "white"
-  DBName: "white_blog"
+  Password: "LabWebSampleSosd23333"
+  DBName: "lab_web_sample"
 
 Logger:
   LogFile: "white_blog.log"

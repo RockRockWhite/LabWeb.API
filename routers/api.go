@@ -40,5 +40,13 @@ func InitApiRouter() *gin.Engine {
 		token.POST("", controllers.CreateToken)
 	}
 
+	publication := router.Group("/publication")
+	{
+		publication.GET("/:id", controllers.GetPublication)
+		publication.POST("/", controllers.GetPublications)
+		publication.PATCH("/:id", middlewares.JwtAuth(), controllers.PatchPublication)
+		publication.DELETE("/:id", middlewares.JwtAuth(), controllers.DeletePublication)
+	}
+
 	return router
 }
