@@ -10,7 +10,7 @@ import (
 )
 
 // JwtAuth JwtToken验证中间件
-func JwtAuth() gin.HandlerFunc {
+func JwtAuth(admin bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
 		if token == "" || strings.Fields(token)[0] != "Bearer" {
@@ -23,7 +23,6 @@ func JwtAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-
 		token = strings.Fields(token)[1]
 
 		claims, err := utils.ParseJwtToken(token)
@@ -31,6 +30,16 @@ func JwtAuth() gin.HandlerFunc {
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, dtos.ErrorDto{
 				Message:          "Token expired or the other error occurred",
+				DocumentationUrl: viper.GetString("Document.Url"),
+			})
+
+			c.Abort()
+			return
+		}
+
+		if admin && !claims.IsAdmin {
+			c.JSON(http.StatusForbidden, dtos.ErrorDto{
+				Message:          "The resourece require a admin.",
 				DocumentationUrl: viper.GetString("Document.Url"),
 			})
 

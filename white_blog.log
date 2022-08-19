@@ -7,3 +7,4 @@ time="2022-08-19 14:53:21" level=info msg="| [request] | 201 | 30.588166ms |    
 time="2022-08-19 14:56:06" level=info msg="| [request] | 400 | 3.704292ms |             ::1 | POST | /token |"
 time="2022-08-19 14:56:17" level=info msg="| [request] | 201 | 16.473917ms |             ::1 | POST | /token |"
 time="2022-08-19 16:35:43" level=info msg="| [service] | ***** Service started ***** |"
+time="2022-08-19 16:52:55" level=info msg="| [service] | ***** Service started ***** |"

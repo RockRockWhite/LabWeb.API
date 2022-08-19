@@ -16,23 +16,23 @@ func InitApiRouter() *gin.Engine {
 	// 配置中间件
 	router.Use(middlewares.Logger())
 
-	blog := router.Group("/article")
+	blog := router.Group("/articles")
 	{
 		blog.GET("/:id", controllers.GetArticle)
 		blog.GET("/", controllers.GetArticles)
-		blog.POST("/", middlewares.JwtAuth(), controllers.AddArticle)
-		blog.PUT("/:id", middlewares.JwtAuth(), controllers.PutArticle)
-		blog.PATCH("/:id", middlewares.JwtAuth(), controllers.PatchArticle)
-		blog.DELETE("/:id", middlewares.JwtAuth(), controllers.DeleteArticle)
+		blog.POST("/", middlewares.JwtAuth(false), controllers.AddArticle)
+		blog.PUT("/:id", middlewares.JwtAuth(false), controllers.PutArticle)
+		blog.PATCH("/:id", middlewares.JwtAuth(false), controllers.PatchArticle)
+		blog.DELETE("/:id", middlewares.JwtAuth(false), controllers.DeleteArticle)
 	}
 
-	user := router.Group("/user")
+	user := router.Group("/users")
 	{
 		user.GET("/:id", controllers.GetUser)
 		user.POST("/", controllers.AddUser)
-		user.PUT("/:id", middlewares.JwtAuth(), controllers.PutUser)
-		user.PATCH("/:id", middlewares.JwtAuth(), controllers.PatchUser)
-		user.DELETE("/:id", middlewares.JwtAuth(), controllers.DeleteUser)
+		user.PUT("/:id", middlewares.JwtAuth(false), controllers.PutUser)
+		user.PATCH("/:id", middlewares.JwtAuth(false), controllers.PatchUser)
+		user.DELETE("/:id", middlewares.JwtAuth(false), controllers.DeleteUser)
 	}
 
 	token := router.Group("/token")
@@ -40,12 +40,13 @@ func InitApiRouter() *gin.Engine {
 		token.POST("", controllers.CreateToken)
 	}
 
-	publication := router.Group("/publication")
+	paper := router.Group("/papers")
 	{
-		publication.GET("/:id", controllers.GetPublication)
-		publication.POST("/", controllers.GetPublications)
-		publication.PATCH("/:id", middlewares.JwtAuth(), controllers.PatchPublication)
-		publication.DELETE("/:id", middlewares.JwtAuth(), controllers.DeletePublication)
+		paper.GET("/:id", controllers.GetPaper)
+		paper.GET("/", middlewares.JwtAuth(false), controllers.GetPapers)
+		paper.POST("/", middlewares.JwtAuth(true), controllers.GetPapers)
+		paper.PATCH("/:id", middlewares.JwtAuth(true), controllers.PatchPaper)
+		paper.DELETE("/:id", middlewares.JwtAuth(true), controllers.DeletePaper)
 	}
 
 	return router

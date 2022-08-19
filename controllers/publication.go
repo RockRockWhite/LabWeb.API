@@ -11,16 +11,16 @@ import (
 	"strconv"
 )
 
-var publicationRepository *services.PublicationRepository
+var paperRepository *services.PaperRepository
 
-// InitPublicationController 初始化Controller
-func InitPublicationController() {
-	publicationRepository = services.NewPublicationRepository(true)
+// InitPaperController 初始化Controller
+func InitPaperController() {
+	paperRepository = services.NewPaperRepository(true)
 }
 
-// AddPublication 添加论文
-func AddPublication(c *gin.Context) {
-	var dto dtos.PublicationAddDto
+// AddPaper 添加论文
+func AddPaper(c *gin.Context) {
+	var dto dtos.PaperAddDto
 
 	if err := c.ShouldBind(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
@@ -34,7 +34,7 @@ func AddPublication(c *gin.Context) {
 	claims := c.MustGet("claims").(*utils.JwtClaims)
 
 	entity := dto.ToEntity(claims.Id)
-	_, err := publicationRepository.AddPublication(entity)
+	_, err := paperRepository.AddPaper(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -43,22 +43,22 @@ func AddPublication(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, dtos.ParsePublicationEntity(entity))
+	c.JSON(http.StatusCreated, dtos.ParsePaperEntity(entity))
 }
 
-// GetPublication 获得论文
-func GetPublication(c *gin.Context) {
+// GetPaper 获得论文
+func GetPaper(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !publicationRepository.PublicationExists(uint(id)) {
+	if !paperRepository.PaperExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Publication %v not found!", id),
+			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
 	}
 
-	entity, err := publicationRepository.GetPublication(uint(id))
+	entity, err := paperRepository.GetPaper(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -68,11 +68,11 @@ func GetPublication(c *gin.Context) {
 	}
 
 	// 转换为Dto
-	c.JSON(http.StatusOK, dtos.ParsePublicationEntity(entity))
+	c.JSON(http.StatusOK, dtos.ParsePaperEntity(entity))
 }
 
-// GetPublications 批量获得论文
-func GetPublications(c *gin.Context) {
+// GetPapers 批量获得论文
+func GetPapers(c *gin.Context) {
 	// 获得page limit
 	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
 	if pageQueryErr != nil {
@@ -91,7 +91,7 @@ func GetPublications(c *gin.Context) {
 		return
 	}
 
-	entities, err := publicationRepository.GetPublications(limit, (page-1)*limit)
+	entities, err := paperRepository.GetPapers(limit, (page-1)*limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -100,27 +100,27 @@ func GetPublications(c *gin.Context) {
 		return
 	}
 	// 转换为Dto
-	getDtos := make([]dtos.PublicationGetDto, 0, len(entities))
+	getDtos := make([]dtos.PaperGetDto, 0, len(entities))
 	for _, entity := range entities {
-		getDtos = append(getDtos, *dtos.ParsePublicationEntity(&entity))
+		getDtos = append(getDtos, *dtos.ParsePaperEntity(&entity))
 	}
 
 	c.JSON(http.StatusOK, getDtos)
 }
 
-// PatchPublication 修改论文
-func PatchPublication(c *gin.Context) {
+// PatchPaper 修改论文
+func PatchPaper(c *gin.Context) {
 	// 获得更新id
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 	if !articleRepository.ArticleExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Publication %v not found!", id),
+			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
 	}
 
-	entity, err := publicationRepository.GetPublication(uint(id))
+	entity, err := paperRepository.GetPaper(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -150,12 +150,12 @@ func PatchPublication(c *gin.Context) {
 	}
 
 	// 应用patch
-	dto := dtos.PublicationDtoFromEntity(entity)
+	dto := dtos.PaperDtoFromEntity(entity)
 	utils.ApplyJsonPatch(dto, patchJson)
 	dto.ApplyUpdateToEntity(entity, claims.Id)
 
 	// 更新数据库
-	err = publicationRepository.UpdatePublication(entity)
+	err = paperRepository.UpdatePaper(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -167,19 +167,19 @@ func PatchPublication(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-// DeletePublication 删除论文
-func DeletePublication(c *gin.Context) {
+// DeletePaper 删除论文
+func DeletePaper(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !publicationRepository.PublicationExists(uint(id)) {
+	if !paperRepository.PaperExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Publication %v not found!", id),
+			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
 	}
 
-	err := publicationRepository.DeletePublication(uint(id))
+	err := paperRepository.DeletePaper(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
