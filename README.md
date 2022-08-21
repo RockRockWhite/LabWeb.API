@@ -10,7 +10,7 @@
 
 ## 运行接口
  
-```
+```bash
    git clone https://github.com/RockRockWhite/LabWeb.API.git
    cd LabWeb.API
    docker-compose up
