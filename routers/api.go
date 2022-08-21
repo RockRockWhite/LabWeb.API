@@ -11,6 +11,7 @@ func InitApiRouter() *gin.Engine {
 	// 初始化Controllers
 	controllers.InitArticleController()
 	controllers.InitUserController()
+	controllers.InitPaperController()
 
 	router := gin.Default()
 
@@ -46,7 +47,7 @@ func InitApiRouter() *gin.Engine {
 			}), controllers.DeleteUser)
 	}
 
-	token := router.Group("/token")
+	token := router.Group("/tokens")
 	{
 		token.POST("", controllers.CreateToken)
 	}
@@ -54,8 +55,8 @@ func InitApiRouter() *gin.Engine {
 	paper := router.Group("/papers")
 	{
 		paper.GET("/:id", controllers.GetPaper)
-		paper.GET("/", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.GetPapers)
-		paper.POST("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetPapers)
+		paper.GET("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetPapers)
+		paper.POST("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddPaper)
 		paper.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchPaper)
 		paper.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeletePaper)
 	}

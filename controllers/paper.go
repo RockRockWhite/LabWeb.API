@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 var paperRepository *services.PaperRepository
@@ -34,6 +35,10 @@ func AddPaper(c *gin.Context) {
 	claims := c.MustGet("claims").(*utils.JwtClaims)
 
 	entity := dto.ToEntity(claims.Id)
+	if entity.PublishedAt.IsZero() {
+		entity.PublishedAt = time.Now()
+	}
+
 	_, err := paperRepository.AddPaper(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
@@ -85,7 +90,7 @@ func GetPapers(c *gin.Context) {
 	limit, limitQueryErr := strconv.Atoi(c.DefaultQuery("limit", "20"))
 	if limitQueryErr != nil {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
-			Message:          "Incorrect query field limit",
+			Message:          "Incorrect query field limit.",
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
@@ -112,7 +117,7 @@ func GetPapers(c *gin.Context) {
 func PatchPaper(c *gin.Context) {
 	// 获得更新id
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	if !articleRepository.ArticleExists(uint(id)) {
+	if !paperRepository.PaperExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),

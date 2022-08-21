@@ -14,7 +14,7 @@ type Paper struct {
 	Content        string     // 论文内容 富文本
 	Authors        string     // 论文作者
 	State          PaperState // 论文状态 枚举
-	PublishedAt    time.Time  `gorm:"default:null"` // 发布时间
+	PublishedAt    time.Time  // 发布时间
 	PublishedIn    string     `gorm:"default:null"` // 发表单位
 	LastModifiedId uint       `gorm:"default:null"` // 最后修改者Id
 
