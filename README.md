@@ -8,6 +8,13 @@
 
 使用postman共享接口文档： https://www.getpostman.com/collections/4da17e612b180fcc652a
 
-正在写dockerfile ing
+## 运行接口
+ 
+```
+   git clone https://github.com/RockRockWhite/LabWeb.API.git
+   cd LabWeb.API
+   docker-compose up
+```
 
-稍后直接以docker形式部署
+## 接口配置修改
+详见./config/config.yml
