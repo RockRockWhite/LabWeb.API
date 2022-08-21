@@ -12,6 +12,7 @@ func InitApiRouter() *gin.Engine {
 	controllers.InitArticleController()
 	controllers.InitUserController()
 	controllers.InitPaperController()
+	controllers.InitTeacherController()
 
 	router := gin.Default()
 
@@ -59,6 +60,15 @@ func InitApiRouter() *gin.Engine {
 		paper.POST("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddPaper)
 		paper.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchPaper)
 		paper.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeletePaper)
+	}
+
+	teacher := router.Group("/teachers")
+	{
+		teacher.GET("/:id", controllers.GetTeacher)
+		teacher.GET("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetTeachers)
+		teacher.POST("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddTeacher)
+		teacher.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchTeacher)
+		teacher.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteTeacher)
 	}
 
 	return router

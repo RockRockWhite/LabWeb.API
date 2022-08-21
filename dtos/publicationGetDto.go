@@ -6,6 +6,7 @@ import (
 )
 
 type PaperGetDto struct {
+	Id             uint                // 论文Id
 	Title          string              // 论文标题
 	Abstract       string              // 论文简介 富文本
 	Content        string              // 论文内容 富文本
@@ -18,6 +19,7 @@ type PaperGetDto struct {
 
 func ParsePaperEntity(p *entities.Paper) *PaperGetDto {
 	dto := PaperGetDto{
+		Id:          p.ID,
 		Title:       p.Title,
 		Abstract:    p.Abstract,
 		Content:     p.Content,

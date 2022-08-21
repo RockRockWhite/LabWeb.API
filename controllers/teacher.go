@@ -9,19 +9,18 @@ import (
 	"github.com/spf13/viper"
 	"net/http"
 	"strconv"
-	"time"
 )
 
-var paperRepository *services.PaperRepository
+var teacherRepository *services.TeacherRepository
 
-// InitPaperController 初始化Controller
-func InitPaperController() {
-	paperRepository = services.NewPaperRepository(true)
+// InitTeacherController 初始化Controller
+func InitTeacherController() {
+	teacherRepository = services.NewTeacherRepository(true)
 }
 
-// AddPaper 添加论文
-func AddPaper(c *gin.Context) {
-	var dto dtos.PaperAddDto
+// AddTeacher 添加教师
+func AddTeacher(c *gin.Context) {
+	var dto dtos.TeacherAddDto
 
 	if err := c.ShouldBind(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
@@ -35,11 +34,8 @@ func AddPaper(c *gin.Context) {
 	claims := c.MustGet("claims").(*utils.JwtClaims)
 
 	entity := dto.ToEntity(claims.Id)
-	if entity.PublishedAt.IsZero() {
-		entity.PublishedAt = time.Now()
-	}
 
-	_, err := paperRepository.AddPaper(entity)
+	_, err := teacherRepository.AddTeacher(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -48,22 +44,22 @@ func AddPaper(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, dtos.ParsePaperEntity(entity))
+	c.JSON(http.StatusCreated, dtos.ParseTeacherEntity(entity))
 }
 
-// GetPaper 获得论文
-func GetPaper(c *gin.Context) {
+// GetTeacher 获得教师信息
+func GetTeacher(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !paperRepository.PaperExists(uint(id)) {
+	if !teacherRepository.TeacherExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Paper %v not found!", id),
+			Message:          fmt.Sprintf("Teacher %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
 	}
 
-	entity, err := paperRepository.GetPaper(uint(id))
+	entity, err := teacherRepository.GetTeacher(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -73,11 +69,11 @@ func GetPaper(c *gin.Context) {
 	}
 
 	// 转换为Dto
-	c.JSON(http.StatusOK, dtos.ParsePaperEntity(entity))
+	c.JSON(http.StatusOK, dtos.ParseTeacherEntity(entity))
 }
 
-// GetPapers 批量获得论文
-func GetPapers(c *gin.Context) {
+// GetTeacher 批量获得教师信息
+func GetTeachers(c *gin.Context) {
 	// 获得page limit
 	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
 	if pageQueryErr != nil {
@@ -96,7 +92,7 @@ func GetPapers(c *gin.Context) {
 		return
 	}
 
-	entities, err := paperRepository.GetPapers(limit, (page-1)*limit)
+	entities, err := teacherRepository.GetTeachers(limit, (page-1)*limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -105,27 +101,27 @@ func GetPapers(c *gin.Context) {
 		return
 	}
 	// 转换为Dto
-	getDtos := make([]dtos.PaperGetDto, 0, len(entities))
+	getDtos := make([]dtos.TeacherGetDto, 0, len(entities))
 	for _, entity := range entities {
-		getDtos = append(getDtos, *dtos.ParsePaperEntity(&entity))
+		getDtos = append(getDtos, *dtos.ParseTeacherEntity(&entity))
 	}
 
 	c.JSON(http.StatusOK, getDtos)
 }
 
-// PatchPaper 修改论文
-func PatchPaper(c *gin.Context) {
+// PatchTeacher 修改教师信息
+func PatchTeacher(c *gin.Context) {
 	// 获得更新id
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	if !paperRepository.PaperExists(uint(id)) {
+	if !teacherRepository.TeacherExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Paper %v not found!", id),
+			Message:          fmt.Sprintf("teacher %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
 	}
 
-	entity, err := paperRepository.GetPaper(uint(id))
+	entity, err := teacherRepository.GetTeacher(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -134,7 +130,7 @@ func PatchPaper(c *gin.Context) {
 		return
 	}
 
-	// 获得用户信息 判断用户是否对该博文具有修改权
+	// 获得用户信息
 	claims := c.MustGet("claims").(*utils.JwtClaims)
 
 	// 获得patchJson
@@ -148,12 +144,12 @@ func PatchPaper(c *gin.Context) {
 	}
 
 	// 应用patch
-	dto := dtos.PaperDtoFromEntity(entity)
+	dto := dtos.TeacherDtoFromEntity(entity)
 	utils.ApplyJsonPatch(dto, patchJson)
 	dto.ApplyUpdateToEntity(entity, claims.Id)
 
 	// 更新数据库
-	err = paperRepository.UpdatePaper(entity)
+	err = teacherRepository.UpdateTeacher(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -165,19 +161,19 @@ func PatchPaper(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-// DeletePaper 删除论文
-func DeletePaper(c *gin.Context) {
+// DeleteTeacher 删除教师信息
+func DeleteTeacher(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !paperRepository.PaperExists(uint(id)) {
+	if !teacherRepository.TeacherExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Paper %v not found!", id),
+			Message:          fmt.Sprintf("Teacher %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
 		})
 		return
 	}
 
-	err := paperRepository.DeletePaper(uint(id))
+	err := teacherRepository.DeleteTeacher(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
