@@ -73,3 +73,4 @@ time="2022-08-19 22:11:42" level=info msg="| [request] | 404 | 5.369459ms |     
 time="2022-08-19 22:13:25" level=info msg="| [service] | ***** Service started ***** |"
 time="2022-08-19 22:13:43" level=info msg="| [request] | 204 | 30.575542ms |             ::1 | PATCH | /users/rockrockwhite |"
 time="2022-08-19 22:13:46" level=info msg="| [request] | 404 | 3.813042ms |             ::1 | PATCH | /users/rockrockwhite |"
+time="2022-08-21 15:12:25" level=info msg="| [service] | ***** Service started ***** |"

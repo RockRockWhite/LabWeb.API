@@ -47,7 +47,7 @@ func CreateToken(c *gin.Context) {
 
 	token, err := utils.GenerateJwtToken(&utils.JwtClaims{
 		Id:          user.ID,
-		NickName:    user.Username,
+		Username:    user.Username,
 		Email:       user.Email,
 		VerifyState: user.VerifyState,
 		Telephone:   user.Telephone,
