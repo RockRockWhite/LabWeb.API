@@ -30,7 +30,7 @@ func NewTeacherRepository(autoMigrate bool) *TeacherRepository {
 	// 完成Article迁移
 	if autoMigrate {
 		if err := db.AutoMigrate(&entities.Teacher{}); err != nil {
-			panic(fmt.Errorf("Fatal migrate database %s : %s \n", "Article", err))
+			panic(fmt.Errorf("Fatal migrate database %s : %s \n", "Teacher", err))
 		}
 	}
 
