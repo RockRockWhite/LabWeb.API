@@ -13,6 +13,9 @@ services:
       - app-network
     expose:
       - 3306
+    ports:
+      - 3006:3306
+
   labwebapi:
     build: .
     ports:
@@ -20,6 +23,8 @@ services:
     restart: always
     networks:
       - app-network
+    depends_on:
+      - labwebdb
 volumes:
   db_data:
 
