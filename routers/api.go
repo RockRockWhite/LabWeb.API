@@ -18,6 +18,7 @@ func InitApiRouter() *gin.Engine {
 	router := gin.Default()
 
 	// 配置中间件
+	router.Use(middlewares.Cors)
 	router.Use(middlewares.Logger())
 
 	blog := router.Group("/articles")
