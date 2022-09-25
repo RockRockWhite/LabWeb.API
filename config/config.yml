@@ -4,7 +4,8 @@ HttpServer:
   Port: ":8080" # 网站运行端口号
 
 DataBase:
-  Host: "labwebdb"
+#  Host: "labwebdb"
+  Host: "localhost"
   Port: "3306"
   Username: "LABWEBLABWEB"
   Password: "LabWebSampleSosd23333"

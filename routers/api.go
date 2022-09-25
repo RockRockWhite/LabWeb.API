@@ -21,16 +21,6 @@ func InitApiRouter() *gin.Engine {
 	router.Use(middlewares.Cors)
 	router.Use(middlewares.Logger())
 
-	blog := router.Group("/articles")
-	{
-		blog.GET("/:id", controllers.GetArticle)
-		blog.GET("/", controllers.GetArticles)
-		//blog.POST("/", middlewares.JwtAuth(), controllers.AddArticle)
-		//blog.PUT("/:id", middlewares.JwtAuth(), controllers.PutArticle)
-		//blog.PATCH("/:id", middlewares.JwtAuth(), controllers.PatchArticle)
-		//blog.DELETE("/:id", middlewares.JwtAuth(), controllers.DeleteArticle)
-	}
-
 	user := router.Group("/users")
 	{
 		user.GET("/:username", controllers.GetUser)
