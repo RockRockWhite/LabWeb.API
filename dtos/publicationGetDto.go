@@ -9,7 +9,8 @@ type PaperGetDto struct {
 	Id             uint                // 论文Id
 	Title          string              // 论文标题
 	Abstract       string              // 论文简介 富文本
-	Content        string              // 论文内容 富文本
+	Thumbnail      string              // 论文缩略图
+	Link           string              // 论文链接
 	Authors        string              // 论文作者
 	State          entities.PaperState // 论文状态 枚举
 	PublishedAt    time.Time           // 发布时间
@@ -22,7 +23,8 @@ func ParsePaperEntity(p *entities.Paper) *PaperGetDto {
 		Id:          p.ID,
 		Title:       p.Title,
 		Abstract:    p.Abstract,
-		Content:     p.Content,
+		Thumbnail:   p.Thumbnail,
+		Link:        p.Link,
 		Authors:     p.Authors,
 		State:       p.State,
 		PublishedAt: p.PublishedAt,

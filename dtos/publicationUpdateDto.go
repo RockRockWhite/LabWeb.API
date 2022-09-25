@@ -9,7 +9,8 @@ import (
 type PaperUpdateDto struct {
 	Title       string              // 论文标题
 	Abstract    string              // 论文简介 富文本
-	Content     string              // 论文内容 富文本
+	Thumbnail   string              // 论文缩略图
+	Link        string              // 论文链接
 	Authors     string              // 论文作者
 	State       entities.PaperState // 论文状态 枚举
 	PublishedAt time.Time           // 发布时间
@@ -21,7 +22,8 @@ func PaperDtoFromEntity(p *entities.Paper) *PaperUpdateDto {
 	return &PaperUpdateDto{
 		Title:       p.Title,
 		Abstract:    p.Abstract,
-		Content:     p.Content,
+		Thumbnail:   p.Thumbnail,
+		Link:        p.Link,
 		Authors:     p.Authors,
 		State:       p.State,
 		PublishedAt: p.PublishedAt,
@@ -33,7 +35,8 @@ func PaperDtoFromEntity(p *entities.Paper) *PaperUpdateDto {
 func (dto *PaperUpdateDto) ApplyUpdateToEntity(entity *entities.Paper, lastModifiedId uint) {
 	entity.Title = dto.Title
 	entity.Abstract = dto.Abstract
-	entity.Content = dto.Content
+	entity.Thumbnail = dto.Thumbnail
+	entity.Link = dto.Link
 	entity.Authors = dto.Authors
 	entity.State = dto.State
 	entity.PublishedAt = dto.PublishedAt

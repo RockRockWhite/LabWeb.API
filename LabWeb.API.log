@@ -246,3 +246,7 @@ time="2022-08-21 17:12:27" level=info msg="| [request] | 204 | 16.244875ms |    
 time="2022-08-21 17:12:31" level=info msg="| [request] | 200 |  2.3465ms |             ::1 | GET | /news/?page=1&limit=20 |"
 time="2022-08-21 17:13:06" level=info msg="| [request] | 204 | 19.042292ms |             ::1 | PATCH | /news/1 |"
 time="2022-08-21 17:13:09" level=info msg="| [request] | 200 | 3.175042ms |             ::1 | GET | /news/?page=1&limit=20 |"
+time="2022-09-24 22:07:02" level=info msg="| [service] | ***** Service started ***** |"
+time="2022-09-24 22:07:03" level=info msg="| [service] | ***** Service stoped ***** |"
+time="2022-09-25 13:59:44" level=info msg="| [service] | ***** Service started ***** |"
+time="2022-09-25 13:59:44" level=info msg="| [service] | ***** Service stoped ***** |"
