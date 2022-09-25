@@ -10,6 +10,11 @@ DataBase:
   Password: "LabWebSampleSosd23333"
   DBName: "lab_web_sample"
 
+Redis:
+  Addr: "localhost:6379"
+  Password: ""
+  DB: 0
+
 Logger:
   LogFile: "LabWeb.API.log"
 
