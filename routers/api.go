@@ -72,5 +72,11 @@ func InitApiRouter() *gin.Engine {
 		news.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteNews)
 	}
 
+	configs := router.Group("/configs")
+	{
+		configs.GET("/:key", controllers.GetConfig)
+		configs.PUT("/:key", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PutConfig)
+	}
+
 	return router
 }
