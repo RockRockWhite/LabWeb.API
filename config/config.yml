@@ -5,10 +5,17 @@ HttpServer:
 
 DataBase:
   Host: "labwebdb"
+  # Host: "localhost"
   Port: "3306"
   Username: "LABWEBLABWEB"
   Password: "LabWebSampleSosd23333"
   DBName: "lab_web_sample"
+
+Redis:
+  Addr: "labwebredis:6379"
+  # Addr: "localhost:6379"
+  Password: ""
+  DB: 0
 
 Logger:
   LogFile: "LabWeb.API.log"

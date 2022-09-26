@@ -2,7 +2,7 @@ package utils
 
 import (
 	"fmt"
-	"gin/entities"
+	"github.com/RockRockWhite/LabWeb.API/entities"
 	"testing"
 )
 

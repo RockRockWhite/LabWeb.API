@@ -21,16 +21,6 @@ func InitApiRouter() *gin.Engine {
 	router.Use(middlewares.Cors)
 	router.Use(middlewares.Logger())
 
-	blog := router.Group("/articles")
-	{
-		blog.GET("/:id", controllers.GetArticle)
-		blog.GET("/", controllers.GetArticles)
-		//blog.POST("/", middlewares.JwtAuth(), controllers.AddArticle)
-		//blog.PUT("/:id", middlewares.JwtAuth(), controllers.PutArticle)
-		//blog.PATCH("/:id", middlewares.JwtAuth(), controllers.PatchArticle)
-		//blog.DELETE("/:id", middlewares.JwtAuth(), controllers.DeleteArticle)
-	}
-
 	user := router.Group("/users")
 	{
 		user.GET("/:username", controllers.GetUser)
@@ -80,6 +70,12 @@ func InitApiRouter() *gin.Engine {
 		news.POST("/", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddNews)
 		news.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchNews)
 		news.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteNews)
+	}
+
+	configs := router.Group("/configs")
+	{
+		configs.GET("/:key", controllers.GetConfig)
+		configs.PUT("/:key", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PutConfig)
 	}
 
 	return router

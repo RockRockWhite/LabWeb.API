@@ -1,16 +1,21 @@
 package config
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
+	"log"
 )
 
-// 加载配置文件
-
-func Init(fileName string) {
-	viper.SetConfigFile(fileName)
-
+func init() {
+	viper.SetConfigFile("./config/config.yml")
 	if err := viper.ReadInConfig(); err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+		log.Fatalf("Fatal error config file: %s \n", err)
 	}
+}
+
+func GetString(key string) string {
+	return viper.GetString(key)
+}
+
+func GetInt(key string) int {
+	return viper.GetInt(key)
 }
