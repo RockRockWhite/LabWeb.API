@@ -18,8 +18,7 @@ func InitApiRouter() *gin.Engine {
 	router := gin.Default()
 
 	// 配置中间件
-	router.Use(middlewares.Cors)
-	router.Use(middlewares.Logger())
+	router.Use(middlewares.Cors, middlewares.Logger())
 
 	user := router.Group("/users")
 	{

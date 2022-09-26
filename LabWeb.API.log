@@ -281,3 +281,5 @@ time="2022-09-25 17:06:57" level=info msg="| [request] | 201 | 4.508231ms |     
 time="2022-09-25 17:07:00" level=info msg="| [request] | 201 | 1.65345ms |             ::1 | GET | /configs/key |"
 time="2022-09-25 17:07:19" level=info msg="| [request] | 201 | 17.655074ms |             ::1 | POST | /papers/ |"
 time="2022-09-25 17:07:41" level=info msg="| [request] | 201 | 23.089113ms |             ::1 | POST | /papers/ |"
+time="2022-09-26 14:29:27" level=info msg="| [service] | ***** Service started ***** |"
+time="2022-09-26 14:29:27" level=info msg="| [service] | ***** Service stoped ***** |"
