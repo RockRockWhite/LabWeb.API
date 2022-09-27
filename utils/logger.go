@@ -1,24 +1,32 @@
 package utils
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/RockRockWhite/LabWeb.API/config"
+	"io"
+	"log"
 	"os"
 )
 
-var logger *logrus.Logger
+var _logger *log.Logger
 
-// InitLogger 初始化logger
-func InitLogger(logFile string, level logrus.Level, timestampFormat string) {
-	// 配置log
-	file, _ := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+func init() {
+	w := io.MultiWriter()
 
-	logger = logrus.New()
-	logger.Out = file
-	logger.SetLevel(level)
-	logger.SetFormatter(&logrus.TextFormatter{TimestampFormat: timestampFormat})
+	f, err := os.OpenFile(config.GetString("Logger.LogFile"), os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	w = io.MultiWriter(w, f)
+
+	// 判断控制台输出是否开启
+	if config.GetString("Logger.Console") == "enable" {
+		w = io.MultiWriter(w, os.Stdout)
+	}
+
+	_logger = log.New(w, "[minio-client] ", log.LstdFlags|log.Lmsgprefix)
+	_logger.Println("======MINIO-CLIENT START======")
 }
 
-// Logger 获得logger
-func Logger() *logrus.Logger {
-	return logger
+func GetLogger() *log.Logger {
+	return _logger
 }
