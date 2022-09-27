@@ -11,7 +11,7 @@ import (
 	"strconv"
 )
 
-var teacherRepository *services.TeacherRepository
+var teacherRepository *services.TeachersRepository
 
 // InitTeacherController 初始化Controller
 func InitTeacherController() {

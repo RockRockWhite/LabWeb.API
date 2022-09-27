@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-var paperRepository *services.PaperRepository
+var paperRepository *services.PapersRepository
 
 // InitPaperController 初始化Controller
 func InitPaperController() {

@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-var userRepository *services.UserRepository
+var userRepository *services.UsersRepository
 
 // InitUserController 初始化用户Controller
 func InitUserController() {

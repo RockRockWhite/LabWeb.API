@@ -3,9 +3,8 @@ package services
 import (
 	"fmt"
 	"github.com/RockRockWhite/LabWeb.API/entities"
+	"github.com/RockRockWhite/LabWeb.API/utils"
 	"github.com/hashicorp/go-multierror"
-	"github.com/spf13/viper"
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -13,29 +12,19 @@ type NewsRepository struct {
 	db *gorm.DB
 }
 
-// NewNewsRepository 创建新的NewsRepository
-func NewNewsRepository(autoMigrate bool) *NewsRepository {
-	Host := viper.GetString("DataBase.Host")
-	Port := viper.GetString("DataBase.Port")
-	Username := viper.GetString("DataBase.Username")
-	Password := viper.GetString("DataBase.Password")
-	DBName := viper.GetString("DataBase.DBName")
+var _newsRepository *NewsRepository
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", Username, Password, Host, Port, DBName)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(fmt.Errorf("Fatal error open database:%s %s \n", dsn, err))
+func init() {
+	db := getDB()
+	if err := db.AutoMigrate(&entities.News{}); err != nil {
+		utils.GetLogger().Fatal("Fatal migrate database %s : %s \n", "News", err)
 	}
 
-	// 完成Article迁移
-	if autoMigrate {
-		if err := db.AutoMigrate(&entities.News{}); err != nil {
-			panic(fmt.Errorf("Fatal migrate database %s : %s \n", "News", err))
-		}
-	}
+	_newsRepository = &NewsRepository{db}
+}
 
-	repository := NewsRepository{db}
-	return &repository
+func GetNewsRepository() *NewsRepository {
+	return _newsRepository
 }
 
 // GetNews 从id获得新闻
