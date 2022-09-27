@@ -77,7 +77,7 @@ func GetPaper(c *gin.Context) {
 }
 
 // GetPapers 批量获得论文
-func GetPapers(c *gin.Context) {
+funcGetPapers(c *gin.Context) {
 	// 获得page limit
 	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
 	if pageQueryErr != nil {
