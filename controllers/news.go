@@ -3,9 +3,11 @@ package controllers
 import (
 	"fmt"
 	"github.com/RockRockWhite/LabWeb.API/dtos"
+	"github.com/RockRockWhite/LabWeb.API/entities"
 	"github.com/RockRockWhite/LabWeb.API/services"
 	"github.com/RockRockWhite/LabWeb.API/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/petersunbag/coven"
 	"github.com/spf13/viper"
 	"net/http"
 	"strconv"
@@ -13,9 +15,8 @@ import (
 
 var newsRepository *services.NewsRepository
 
-// InitNewsController 初始化Controller
-func InitNewsController() {
-	newsRepository = services.NewNewsRepository(true)
+func init() {
+	newsRepository = services.GetNewsRepository()
 }
 
 // AddNews 添加新闻
@@ -33,9 +34,27 @@ func AddNews(c *gin.Context) {
 	// 获得用户信息
 	claims := c.MustGet("claims").(*utils.JwtClaims)
 
-	entity := dto.ToEntity(claims.Id)
+	var converter, err = coven.NewConverter(entities.News{}, dtos.NewsAddDto{})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
 
-	_, err := newsRepository.AddNews(entity)
+	var entity *entities.News
+	err = converter.Convert(entity, &dto)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	entity.ID = claims.Id
+
+	_, err = newsRepository.AddNews(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),

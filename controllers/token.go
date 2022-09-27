@@ -22,7 +22,7 @@ func CreateToken(c *gin.Context) {
 	}
 
 	// 查找用户
-	if !userRepository.UsernameExists(tokenDto.Username) {
+	if !usersRepository.UsernameExists(tokenDto.Username) {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
 			Message:          "invalid username or password",
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -30,7 +30,7 @@ func CreateToken(c *gin.Context) {
 		return
 	}
 
-	user, err := userRepository.GetUserByName(tokenDto.Username)
+	user, err := usersRepository.GetUserByName(tokenDto.Username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return

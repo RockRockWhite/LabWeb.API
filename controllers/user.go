@@ -10,11 +10,10 @@ import (
 	"net/http"
 )
 
-var userRepository *services.UsersRepository
+var usersRepository *services.UsersRepository
 
-// InitUserController 初始化用户Controller
-func InitUserController() {
-	userRepository = services.NewUserRepository(true)
+func init() {
+	usersRepository = services.GetUsersRepository()
 }
 
 // AddUser 添加用户
@@ -30,7 +29,7 @@ func AddUser(c *gin.Context) {
 	}
 
 	// 保证用户名不重复
-	if userRepository.UsernameExists(userDto.Username) {
+	if usersRepository.UsernameExists(userDto.Username) {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Username %v exists", userDto.Username),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -39,7 +38,7 @@ func AddUser(c *gin.Context) {
 	}
 
 	entity := userDto.ToEntity()
-	_, err := userRepository.AddUser(entity)
+	_, err := usersRepository.AddUser(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -51,7 +50,7 @@ func AddUser(c *gin.Context) {
 // GetUser 获得用户
 func GetUser(c *gin.Context) {
 	username := c.Param("username")
-	if !userRepository.UsernameExists(username) {
+	if !usersRepository.UsernameExists(username) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("User %v not found.", username),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -59,7 +58,7 @@ func GetUser(c *gin.Context) {
 		return
 	}
 
-	user, err := userRepository.GetUserByName(username)
+	user, err := usersRepository.GetUserByName(username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -73,7 +72,7 @@ func GetUser(c *gin.Context) {
 func PatchUser(c *gin.Context) {
 	// 获得更新id
 	username := c.Param("username")
-	if !userRepository.UsernameExists(username) {
+	if !usersRepository.UsernameExists(username) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("User %v not found!", username),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -81,7 +80,7 @@ func PatchUser(c *gin.Context) {
 		return
 	}
 
-	user, err := userRepository.GetUserByName(username)
+	user, err := usersRepository.GetUserByName(username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -103,7 +102,7 @@ func PatchUser(c *gin.Context) {
 	dto.ApplyUpdateToEntity(user)
 
 	// 保证用户名不重复
-	if userRepository.UsernameExists(user.Username) {
+	if usersRepository.UsernameExists(user.Username) {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Username %v exists", user.Username),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -112,7 +111,7 @@ func PatchUser(c *gin.Context) {
 	}
 
 	// 更新数据库
-	err = userRepository.UpdateUser(user)
+	err = usersRepository.UpdateUser(user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -124,7 +123,7 @@ func PatchUser(c *gin.Context) {
 // DeleteUser 删除用户
 func DeleteUser(c *gin.Context) {
 	username := c.Param("username")
-	if !userRepository.UsernameExists(username) {
+	if !usersRepository.UsernameExists(username) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("User %v not found!", username),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -132,7 +131,7 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	err := userRepository.DeleteUserByName(username)
+	err := usersRepository.DeleteUserByName(username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return

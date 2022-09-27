@@ -12,11 +12,10 @@ import (
 	"time"
 )
 
-var paperRepository *services.PapersRepository
+var papersRepository *services.PapersRepository
 
-// InitPaperController 初始化Controller
-func InitPaperController() {
-	paperRepository = services.NewPaperRepository(true)
+func init() {
+	papersRepository = services.GetPapersRepository()
 }
 
 // AddPaper 添加论文
@@ -39,7 +38,7 @@ func AddPaper(c *gin.Context) {
 		entity.PublishedAt = time.Now()
 	}
 
-	_, err := paperRepository.AddPaper(entity)
+	_, err := papersRepository.AddPaper(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -55,7 +54,7 @@ func AddPaper(c *gin.Context) {
 func GetPaper(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !paperRepository.PaperExists(uint(id)) {
+	if !papersRepository.PaperExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -63,7 +62,7 @@ func GetPaper(c *gin.Context) {
 		return
 	}
 
-	entity, err := paperRepository.GetPaper(uint(id))
+	entity, err := papersRepository.GetPaper(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -96,7 +95,7 @@ func GetPapers(c *gin.Context) {
 		return
 	}
 
-	entities, err := paperRepository.GetPapers(limit, (page-1)*limit)
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -117,7 +116,7 @@ func GetPapers(c *gin.Context) {
 func PatchPaper(c *gin.Context) {
 	// 获得更新id
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	if !paperRepository.PaperExists(uint(id)) {
+	if !papersRepository.PaperExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -125,7 +124,7 @@ func PatchPaper(c *gin.Context) {
 		return
 	}
 
-	entity, err := paperRepository.GetPaper(uint(id))
+	entity, err := papersRepository.GetPaper(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -153,7 +152,7 @@ func PatchPaper(c *gin.Context) {
 	dto.ApplyUpdateToEntity(entity, claims.Id)
 
 	// 更新数据库
-	err = paperRepository.UpdatePaper(entity)
+	err = papersRepository.UpdatePaper(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -169,7 +168,7 @@ func PatchPaper(c *gin.Context) {
 func DeletePaper(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !paperRepository.PaperExists(uint(id)) {
+	if !papersRepository.PaperExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Paper %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -177,7 +176,7 @@ func DeletePaper(c *gin.Context) {
 		return
 	}
 
-	err := paperRepository.DeletePaper(uint(id))
+	err := papersRepository.DeletePaper(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),

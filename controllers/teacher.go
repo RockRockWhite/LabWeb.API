@@ -11,11 +11,10 @@ import (
 	"strconv"
 )
 
-var teacherRepository *services.TeachersRepository
+var teachersRepository *services.TeachersRepository
 
-// InitTeacherController 初始化Controller
-func InitTeacherController() {
-	teacherRepository = services.NewTeacherRepository(true)
+func init() {
+	teachersRepository = services.GetTeachersRepository()
 }
 
 // AddTeacher 添加教师
@@ -35,7 +34,7 @@ func AddTeacher(c *gin.Context) {
 
 	entity := dto.ToEntity(claims.Id)
 
-	_, err := teacherRepository.AddTeacher(entity)
+	_, err := teachersRepository.AddTeacher(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -51,7 +50,7 @@ func AddTeacher(c *gin.Context) {
 func GetTeacher(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !teacherRepository.TeacherExists(uint(id)) {
+	if !teachersRepository.TeacherExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Teacher %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -59,7 +58,7 @@ func GetTeacher(c *gin.Context) {
 		return
 	}
 
-	entity, err := teacherRepository.GetTeacher(uint(id))
+	entity, err := teachersRepository.GetTeacher(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -92,7 +91,7 @@ func GetTeachers(c *gin.Context) {
 		return
 	}
 
-	entities, err := teacherRepository.GetTeachers(limit, (page-1)*limit)
+	entities, err := teachersRepository.GetTeachers(limit, (page-1)*limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -113,7 +112,7 @@ func GetTeachers(c *gin.Context) {
 func PatchTeacher(c *gin.Context) {
 	// 获得更新id
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	if !teacherRepository.TeacherExists(uint(id)) {
+	if !teachersRepository.TeacherExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("teacher %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -121,7 +120,7 @@ func PatchTeacher(c *gin.Context) {
 		return
 	}
 
-	entity, err := teacherRepository.GetTeacher(uint(id))
+	entity, err := teachersRepository.GetTeacher(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -149,7 +148,7 @@ func PatchTeacher(c *gin.Context) {
 	dto.ApplyUpdateToEntity(entity, claims.Id)
 
 	// 更新数据库
-	err = teacherRepository.UpdateTeacher(entity)
+	err = teachersRepository.UpdateTeacher(entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -165,7 +164,7 @@ func PatchTeacher(c *gin.Context) {
 func DeleteTeacher(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
-	if !teacherRepository.TeacherExists(uint(id)) {
+	if !teachersRepository.TeacherExists(uint(id)) {
 		c.JSON(http.StatusNotFound, dtos.ErrorDto{
 			Message:          fmt.Sprintf("Teacher %v not found!", id),
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -173,7 +172,7 @@ func DeleteTeacher(c *gin.Context) {
 		return
 	}
 
-	err := teacherRepository.DeleteTeacher(uint(id))
+	err := teachersRepository.DeleteTeacher(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),

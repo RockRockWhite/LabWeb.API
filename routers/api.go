@@ -9,16 +9,10 @@ import (
 
 func InitApiRouter() *gin.Engine {
 	// 初始化Controllers
-	controllers.InitArticleController()
-	controllers.InitUserController()
-	controllers.InitPaperController()
-	controllers.InitTeacherController()
-	controllers.InitNewsController()
-
 	router := gin.Default()
 
 	// 配置中间件
-	router.Use(middlewares.Cors, middlewares.Logger())
+	router.Use(middlewares.Cors, middlewares.Logger)
 
 	user := router.Group("/users")
 	{

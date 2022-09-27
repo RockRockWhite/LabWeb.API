@@ -283,3 +283,8 @@ time="2022-09-25 17:07:19" level=info msg="| [request] | 201 | 17.655074ms |    
 time="2022-09-25 17:07:41" level=info msg="| [request] | 201 | 23.089113ms |             ::1 | POST | /papers/ |"
 time="2022-09-26 14:29:27" level=info msg="| [service] | ***** Service started ***** |"
 time="2022-09-26 14:29:27" level=info msg="| [service] | ***** Service stoped ***** |"
+2022/09/27 22:15:01 [minio-client] ======MINIO-CLIENT START======
+2022/09/27 22:15:01 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host
+2022/09/27 22:15:34 [minio-client] ======MINIO-CLIENT START======
+2022/09/27 22:15:34 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
