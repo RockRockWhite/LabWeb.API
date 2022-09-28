@@ -42,7 +42,7 @@ func (repository *NewsRepository) GetNews(id uint) (*entities.News, error) {
 func (repository *NewsRepository) GetNewsList(limit int, offset int) ([]entities.News, error) {
 	var err error
 	var news []entities.News
-	if result := repository.db.Limit(limit).Offset(offset).Find(&news); result.Error != nil {
+	if result := repository.db.Order("updated_at desc").Limit(limit).Offset(offset).Find(&news); result.Error != nil {
 		err = multierror.Append(err, fmt.Errorf("failed to get news : %s", result.Error))
 	}
 

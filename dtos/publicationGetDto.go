@@ -16,6 +16,8 @@ type PaperGetDto struct {
 	PublishedAt    time.Time           // 发布时间
 	PublishedIn    string              // 发表单位
 	LastModifiedId uint                // 最后修改者Id
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }
 
 func ParsePaperEntity(p *entities.Paper) *PaperGetDto {

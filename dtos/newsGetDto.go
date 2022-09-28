@@ -4,6 +4,7 @@ import (
 	"github.com/RockRockWhite/LabWeb.API/entities"
 	"github.com/RockRockWhite/LabWeb.API/utils"
 	"github.com/petersunbag/coven"
+	"time"
 )
 
 type NewsGetDto struct {
@@ -11,6 +12,8 @@ type NewsGetDto struct {
 	Title          string // 新闻标题
 	Content        string // 新闻内容
 	LastModifiedId uint   // 最后修改者Id
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }
 
 func GetNewsGetDtoConverter() *coven.Converter {

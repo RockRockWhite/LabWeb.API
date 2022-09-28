@@ -42,7 +42,7 @@ func (repository *PapersRepository) GetPaper(id uint) (*entities.Paper, error) {
 func (repository *PapersRepository) GetPapers(limit int, offset int) ([]entities.Paper, error) {
 	var err error
 	var papers []entities.Paper
-	if result := repository.db.Limit(limit).Offset(offset).Find(&papers); result.Error != nil {
+	if result := repository.db.Order("updated_at desc").Limit(limit).Offset(offset).Find(&papers); result.Error != nil {
 		err = multierror.Append(err, fmt.Errorf("failed to get papers : %s", result.Error))
 	}
 
