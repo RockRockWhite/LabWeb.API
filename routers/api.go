@@ -50,7 +50,7 @@ func InitApiRouter() *gin.Engine {
 	teacher := router.Group("/teachers")
 	{
 		teacher.GET("/:id", controllers.GetTeacher)
-		teacher.GET("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetTeachers)
+		teacher.GET("", controllers.GetTeachers)
 		teacher.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddTeacher)
 		teacher.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchTeacher)
 		teacher.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteTeacher)
@@ -59,7 +59,7 @@ func InitApiRouter() *gin.Engine {
 	news := router.Group("/news")
 	{
 		news.GET("/:id", controllers.GetNews)
-		news.GET("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetNewsList)
+		news.GET("", controllers.GetNewsList)
 		news.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddNews)
 		news.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchNews)
 		news.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteNews)

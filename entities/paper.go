@@ -28,6 +28,6 @@ func (Paper) TableName() string {
 type PaperState int
 
 const (
-	PaperState_Public PaperState = iota
-	PaperState_Private
+	PaperState_Private PaperState = iota
+	PaperState_Public
 )

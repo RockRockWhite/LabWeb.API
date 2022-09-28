@@ -288,3 +288,81 @@ time="2022-09-26 14:29:27" level=info msg="| [service] | ***** Service stoped **
 LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host
 2022/09/27 22:15:34 [minio-client] ======MINIO-CLIENT START======
 2022/09/27 22:15:34 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 20:57:49 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 20:57:49 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:00:18 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:00:18 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:02:43 [minio-client] [request]	status:404	cost:27.706428ms	addr:            ::1	method:GET	url:/news/1
+2022/09/28 21:03:10 [minio-client] [request]	status:404	cost:5.525798ms	addr:            ::1	method:GET	url:/news/1
+2022/09/28 21:05:21 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:05:21 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:07:57 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:07:57 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:07:59 [minio-client] [request]	status:200	cost:2.567005ms	addr:            ::1	method:GET	url:/news?page=1&limit=20
+2022/09/28 21:08:03 [minio-client] [request]	status:403	cost:429.832µs	addr:            ::1	method:POST	url:/news
+2022/09/28 21:08:08 [minio-client] [request]	status:201	cost:7.671255ms	addr:            ::1	method:POST	url:/tokens
+2022/09/28 21:10:24 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:10:24 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:11:06 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:11:06 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:11:08 [minio-client] [request]	status:500	cost:20.330798ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:11:42 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:11:42 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:11:47 [minio-client] [request]	status:201	cost:23.366286ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:11:51 [minio-client] [request]	status:201	cost:11.461477ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:11:54 [minio-client] [request]	status:201	cost:50.391218ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:11:56 [minio-client] [request]	status:201	cost:24.370804ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:11:57 [minio-client] [request]	status:201	cost:96.005242ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:11:58 [minio-client] [request]	status:201	cost:10.159957ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:12:06 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:12:06 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:12:06 [minio-client] listen tcp :8081: bind: address already in use
+2022/09/28 21:12:32 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:12:32 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:12:36 [minio-client] [request]	status:201	cost:25.516647ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:12:37 [minio-client] [request]	status:201	cost:31.186598ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:12:38 [minio-client] [request]	status:201	cost:15.018016ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:13:11 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:13:11 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:13:26 [minio-client] [request]	status:200	cost:4.944469ms	addr:            ::1	method:GET	url:/news?page=1&limit=20
+2022/09/28 21:16:26 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:16:26 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:17:37 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:17:37 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:17:39 [minio-client] [request]	status:201	cost:17.374116ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:17:58 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:17:58 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:19:24 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:19:24 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:19:27 [minio-client] [request]	status:201	cost:23.838282ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:19:37 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:19:37 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:20:31 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:20:31 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:20:34 [minio-client] [request]	status:201	cost:43.245724ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:20:35 [minio-client] [request]	status:201	cost:10.923955ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:20:36 [minio-client] [request]	status:201	cost:12.422756ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:20:37 [minio-client] [request]	status:201	cost:13.644412ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:20:38 [minio-client] [request]	status:201	cost:30.539086ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:20:39 [minio-client] [request]	status:201	cost:19.082607ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:20:40 [minio-client] [request]	status:201	cost:10.477039ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:24:47 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:24:47 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:24:56 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:24:56 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:24:59 [minio-client] [request]	status:201	cost:13.588432ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:25:00 [minio-client] [request]	status:201	cost:18.612955ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:25:01 [minio-client] [request]	status:201	cost:14.009733ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:25:02 [minio-client] [request]	status:201	cost:9.22287ms	addr:            ::1	method:POST	url:/news
+2022/09/28 21:25:06 [minio-client] [request]	status:200	cost:6.588906ms	addr:            ::1	method:GET	url:/news?page=1&limit=20
+2022/09/28 21:31:56 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:31:56 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:33:17 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:33:17 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:33:20 [minio-client] [request]	status:204	cost:56.285941ms	addr:            ::1	method:PATCH	url:/news/1
+2022/09/28 21:33:44 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:33:44 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:33:45 [minio-client] [request]	status:200	cost:3.951181ms	addr:            ::1	method:GET	url:/news?page=1&limit=20
+2022/09/28 21:34:00 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 21:34:00 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 21:34:42 [minio-client] [request]	status:201	cost:117.601898ms	addr:            ::1	method:GET	url:/configs/key

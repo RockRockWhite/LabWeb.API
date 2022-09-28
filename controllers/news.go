@@ -7,7 +7,6 @@ import (
 	"github.com/RockRockWhite/LabWeb.API/services"
 	"github.com/RockRockWhite/LabWeb.API/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/petersunbag/coven"
 	"github.com/spf13/viper"
 	"net/http"
 	"strconv"
@@ -21,9 +20,9 @@ func init() {
 
 // AddNews 添加新闻
 func AddNews(c *gin.Context) {
-	var dto dtos.NewsAddDto
+	var addDto dtos.NewsAddDto
 
-	if err := c.ShouldBind(&dto); err != nil {
+	if err := c.ShouldBind(&addDto); err != nil {
 		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
 			Message:          "Bind Model Error",
 			DocumentationUrl: viper.GetString("Document.Url"),
@@ -34,7 +33,11 @@ func AddNews(c *gin.Context) {
 	// 获得用户信息
 	claims := c.MustGet("claims").(*utils.JwtClaims)
 
-	var converter, err = coven.NewConverter(entities.News{}, dtos.NewsAddDto{})
+	var entity entities.News
+	dtos.GetNewsAddDtoConverter().Convert(&entity, &addDto)
+	entity.LastModifiedId = claims.Id
+
+	_, err := newsRepository.AddNews(&entity)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -43,27 +46,9 @@ func AddNews(c *gin.Context) {
 		return
 	}
 
-	var entity *entities.News
-	err = converter.Convert(entity, &dto)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
-			Message:          err.Error(),
-			DocumentationUrl: viper.GetString("Document.Url"),
-		})
-		return
-	}
-	entity.ID = claims.Id
-
-	_, err = newsRepository.AddNews(entity)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
-			Message:          err.Error(),
-			DocumentationUrl: viper.GetString("Document.Url"),
-		})
-		return
-	}
-
-	c.JSON(http.StatusCreated, dtos.ParseNewsEntity(entity))
+	var getDto dtos.NewsGetDto
+	err = dtos.GetNewsGetDtoConverter().Convert(&getDto, &entity)
+	c.JSON(http.StatusCreated, getDto)
 }
 
 // GetNews 获得新闻
@@ -88,7 +73,9 @@ func GetNews(c *gin.Context) {
 	}
 
 	// 转换为Dto
-	c.JSON(http.StatusOK, dtos.ParseNewsEntity(entity))
+	var getDto dtos.NewsGetDto
+	dtos.GetNewsGetDtoConverter().Convert(&getDto, entity)
+	c.JSON(http.StatusOK, getDto)
 }
 
 // GetNewsList 批量获得新闻
@@ -122,7 +109,9 @@ func GetNewsList(c *gin.Context) {
 	// 转换为Dto
 	getDtos := make([]dtos.NewsGetDto, 0, len(entities))
 	for _, entity := range entities {
-		getDtos = append(getDtos, *dtos.ParseNewsEntity(&entity))
+		var each dtos.NewsGetDto
+		dtos.GetNewsGetDtoConverter().Convert(&each, &entity)
+		getDtos = append(getDtos, each)
 	}
 
 	c.JSON(http.StatusOK, getDtos)
@@ -162,9 +151,11 @@ func PatchNews(c *gin.Context) {
 	}
 
 	// 应用patch
-	dto := dtos.NewsDtoFromEntity(entity)
-	utils.ApplyJsonPatch(dto, patchJson)
-	dto.ApplyUpdateToEntity(entity, claims.Id)
+	var updateDto dtos.NewsUpdateDto
+	dtos.GetNewsUpdateDtoEntityConverter().Convert(&updateDto, entity)
+	utils.ApplyJsonPatch(&updateDto, patchJson)
+	dtos.GetNewsEntityUpdateDtoConverter().Convert(entity, &updateDto)
+	entity.LastModifiedId = claims.Id
 
 	// 更新数据库
 	err = newsRepository.UpdateNews(entity)
