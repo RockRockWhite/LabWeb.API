@@ -192,3 +192,12 @@ func DeleteNews(c *gin.Context) {
 	}
 	c.Status(http.StatusNoContent)
 }
+
+// CountNews 获得新闻数量
+func CountNews(c *gin.Context) {
+	c.JSON(http.StatusOK, struct {
+		Count int64
+	}{
+		Count: newsRepository.Count(),
+	})
+}

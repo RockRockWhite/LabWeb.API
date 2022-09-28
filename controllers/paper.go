@@ -186,3 +186,12 @@ func DeletePaper(c *gin.Context) {
 	}
 	c.Status(http.StatusNoContent)
 }
+
+// CountPaper 获得论文数量
+func CountPaper(c *gin.Context) {
+	c.JSON(http.StatusOK, struct {
+		Count int64
+	}{
+		Count: papersRepository.Count(),
+	})
+}

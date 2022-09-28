@@ -372,3 +372,26 @@ LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf
 2022/09/28 21:42:20 [minio-client] ======MINIO-CLIENT START======
 2022/09/28 21:42:20 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
 2022/09/28 21:42:26 [minio-client] [request]	status:200	cost:4.598727ms	addr:            ::1	method:GET	url:/news?page=1&limit=20
+2022/09/28 22:00:10 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 22:00:10 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 22:00:27 [minio-client] [request]	status:204	cost:8.308951ms	addr:            ::1	method:GET	url:/papers/count
+2022/09/28 22:01:04 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 22:01:04 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 22:01:08 [minio-client] [request]	status:200	cost:2.060871ms	addr:            ::1	method:GET	url:/papers/count
+2022/09/28 22:01:10 [minio-client] [request]	status:200	cost:2.482604ms	addr:            ::1	method:GET	url:/papers/count
+2022/09/28 22:01:12 [minio-client] [request]	status:200	cost:3.23664ms	addr:            ::1	method:GET	url:/papers?page=1&limit=20
+2022/09/28 22:01:25 [minio-client] [request]	status:201	cost:33.678779ms	addr:            ::1	method:POST	url:/papers
+2022/09/28 22:01:26 [minio-client] [request]	status:201	cost:32.925085ms	addr:            ::1	method:POST	url:/papers
+2022/09/28 22:01:26 [minio-client] [request]	status:201	cost:10.705767ms	addr:            ::1	method:POST	url:/papers
+2022/09/28 22:01:27 [minio-client] [request]	status:201	cost:15.472668ms	addr:            ::1	method:POST	url:/papers
+2022/09/28 22:01:30 [minio-client] [request]	status:200	cost:1.581472ms	addr:            ::1	method:GET	url:/papers/count
+2022/09/28 22:03:03 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 22:03:04 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 22:03:19 [minio-client] [request]	status:200	cost:1.925876ms	addr:            ::1	method:GET	url:/news/count
+2022/09/28 22:03:23 [minio-client] [request]	status:200	cost:3.968884ms	addr:            ::1	method:GET	url:/news?page=1&limit=20
+2022/09/28 22:05:12 [minio-client] ======MINIO-CLIENT START======
+2022/09/28 22:05:12 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/28 22:05:30 [minio-client] [request]	status:200	cost:8.204716ms	addr:            ::1	method:GET	url:/teachers/count
+2022/09/28 22:05:34 [minio-client] [request]	status:401	cost:163.273µs	addr:            ::1	method:POST	url:/teachers
+2022/09/28 22:05:38 [minio-client] [request]	status:201	cost:18.355249ms	addr:            ::1	method:POST	url:/teachers
+2022/09/28 22:05:42 [minio-client] [request]	status:200	cost:1.589215ms	addr:            ::1	method:GET	url:/teachers/count

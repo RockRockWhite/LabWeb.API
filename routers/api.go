@@ -41,6 +41,7 @@ func InitApiRouter() *gin.Engine {
 	paper := router.Group("/papers")
 	{
 		paper.GET("/:id", controllers.GetPaper)
+		paper.GET("/count", controllers.CountPaper)
 		paper.GET("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetPapers)
 		paper.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddPaper)
 		paper.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchPaper)
@@ -50,6 +51,7 @@ func InitApiRouter() *gin.Engine {
 	teacher := router.Group("/teachers")
 	{
 		teacher.GET("/:id", controllers.GetTeacher)
+		teacher.GET("/count", controllers.CountTeachers)
 		teacher.GET("", controllers.GetTeachers)
 		teacher.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddTeacher)
 		teacher.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchTeacher)
@@ -59,6 +61,7 @@ func InitApiRouter() *gin.Engine {
 	news := router.Group("/news")
 	{
 		news.GET("/:id", controllers.GetNews)
+		news.GET("/count", controllers.CountNews)
 		news.GET("", controllers.GetNewsList)
 		news.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddNews)
 		news.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchNews)

@@ -88,3 +88,11 @@ func (repository *NewsRepository) NewsExists(id uint) bool {
 
 	return result.RowsAffected >= 1
 }
+
+// Count 返回数量
+func (repository *NewsRepository) Count() int64 {
+	var count int64
+	repository.db.Model(&entities.News{}).Count(&count)
+
+	return count
+}

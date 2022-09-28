@@ -88,3 +88,11 @@ func (repository *TeachersRepository) TeacherExists(id uint) bool {
 
 	return result.RowsAffected >= 1
 }
+
+// Count 返回数量
+func (repository *TeachersRepository) Count() int64 {
+	var count int64
+	repository.db.Model(&entities.Teacher{}).Count(&count)
+
+	return count
+}

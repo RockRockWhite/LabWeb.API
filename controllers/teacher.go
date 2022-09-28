@@ -182,3 +182,12 @@ func DeleteTeacher(c *gin.Context) {
 	}
 	c.Status(http.StatusNoContent)
 }
+
+// CountTeachers 获得教师数量
+func CountTeachers(c *gin.Context) {
+	c.JSON(http.StatusOK, struct {
+		Count int64
+	}{
+		Count: teachersRepository.Count(),
+	})
+}
