@@ -24,7 +24,7 @@ func init() {
 	}
 
 	_logger = log.New(w, "[minio-client] ", log.LstdFlags|log.Lmsgprefix)
-	_logger.Println("======MINIO-CLIENT START======")
+	_logger.Println("======LabWeb.API START======")
 }
 
 func GetLogger() *log.Logger {
