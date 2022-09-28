@@ -43,6 +43,8 @@ func InitApiRouter() *gin.Engine {
 		paper.GET("/:id", controllers.GetPaper)
 		paper.GET("/count", controllers.CountPaper)
 		paper.GET("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetPapers)
+		paper.GET("/public", controllers.GetPapersPublic)
+		paper.GET("/private", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetPapersPrivate)
 		paper.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddPaper)
 		paper.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchPaper)
 		paper.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeletePaper)

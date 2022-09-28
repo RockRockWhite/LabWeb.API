@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/RockRockWhite/LabWeb.API/dtos"
+	_entities "github.com/RockRockWhite/LabWeb.API/entities"
 	"github.com/RockRockWhite/LabWeb.API/services"
 	"github.com/RockRockWhite/LabWeb.API/utils"
 	"github.com/gin-gonic/gin"
@@ -95,7 +96,81 @@ func GetPapers(c *gin.Context) {
 		return
 	}
 
-	entities, err := papersRepository.GetPapers(limit, (page-1)*limit)
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, "")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	// 转换为Dto
+	getDtos := make([]dtos.PaperGetDto, 0, len(entities))
+	for _, entity := range entities {
+		getDtos = append(getDtos, *dtos.ParsePaperEntity(&entity))
+	}
+
+	c.JSON(http.StatusOK, getDtos)
+}
+
+// GetPapersPublic 批量获得公开论文
+func GetPapersPublic(c *gin.Context) {
+	// 获得page limit
+	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if pageQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field page",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	limit, limitQueryErr := strconv.Atoi(c.DefaultQuery("limit", "20"))
+	if limitQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field limit.",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Public)))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	// 转换为Dto
+	getDtos := make([]dtos.PaperGetDto, 0, len(entities))
+	for _, entity := range entities {
+		getDtos = append(getDtos, *dtos.ParsePaperEntity(&entity))
+	}
+
+	c.JSON(http.StatusOK, getDtos)
+}
+
+// GetPapersPrivate 批量获得私有论文
+func GetPapersPrivate(c *gin.Context) {
+	// 获得page limit
+	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if pageQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field page",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	limit, limitQueryErr := strconv.Atoi(c.DefaultQuery("limit", "20"))
+	if limitQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field limit.",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Private)))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
