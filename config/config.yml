@@ -1,7 +1,7 @@
 AppDebug: true   # 调试模式
 
 HttpServer:
-  Port: ":8081" # 网站运行端口号
+  Port: ":8080" # 网站运行端口号
 
 DataBase:
   Host: "labwebdb"
