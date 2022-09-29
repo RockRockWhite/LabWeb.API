@@ -22,3 +22,6 @@
 2022/09/29 19:35:34 [minio-client] [request]	status:404	cost:10.093364ms	addr:            ::1	method:DELETE	url:/resources/1
 2022/09/29 19:35:38 [minio-client] [request]	status:200	cost:2.316273ms	addr:            ::1	method:GET	url:/resources?page=1&limit=20
 2022/09/29 19:35:43 [minio-client] [request]	status:404	cost:5.709363ms	addr:            ::1	method:GET	url:/resources/1
+2022/09/29 19:45:49 [minio-client] ======LabWeb.API START======
+2022/09/29 19:45:49 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host

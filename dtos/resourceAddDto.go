@@ -8,6 +8,7 @@ import (
 
 // ResourceAddDto 添加资源Dto
 type ResourceAddDto struct {
+	Title       string // 资源标题
 	Link        string // 资源链接
 	Description string // 资源描述
 }

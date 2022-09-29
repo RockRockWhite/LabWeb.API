@@ -9,6 +9,7 @@ import (
 
 type ResourceGetDto struct {
 	Id             uint   // 资源Id
+	Title          string // 资源标题
 	Link           string // 资源链接
 	Description    string // 资源描述
 	LastModifiedId uint   // 最后修改者Id

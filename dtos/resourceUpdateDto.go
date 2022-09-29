@@ -8,6 +8,7 @@ import (
 
 // ResourceUpdateDto 修改资源Dto
 type ResourceUpdateDto struct {
+	Title       string // 资源标题
 	Link        string // 资源链接
 	Description string // 资源描述
 }

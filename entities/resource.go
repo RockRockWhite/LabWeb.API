@@ -7,6 +7,7 @@ import (
 // Resource 资源实体类
 type Resource struct {
 	gorm.Model
+	Title          string // 资源标题
 	Link           string // 资源链接
 	Description    string // 资源描述
 	LastModifiedId uint   `gorm:"default:null"` // 最后修改者Id
