@@ -76,5 +76,15 @@ func InitApiRouter() *gin.Engine {
 		configs.PUT("/:key", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PutConfig)
 	}
 
+	resources := router.Group("/resources")
+	{
+		resources.GET("/:id", controllers.GetResource)
+		resources.GET("/count", controllers.CountResources)
+		resources.GET("", controllers.GetResourcesList)
+		resources.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddResources)
+		resources.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchResources)
+		resources.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteResources)
+	}
+
 	return router
 }

@@ -1,0 +1,24 @@
+2022/09/29 19:29:40 [minio-client] ======LabWeb.API START======
+2022/09/29 19:29:40 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/29 19:29:41 [minio-client] listen tcp :8080: bind: address already in use
+2022/09/29 19:30:10 [minio-client] ======LabWeb.API START======
+2022/09/29 19:30:10 [minio-client] Opened database:LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Local %!s(<nil>) 
+2022/09/29 19:31:35 [minio-client] [request]	status:404	cost:14.011406ms	addr:            ::1	method:GET	url:/resources/3
+2022/09/29 19:32:49 [minio-client] [request]	status:200	cost:4.553114ms	addr:            ::1	method:GET	url:/resources/count
+2022/09/29 19:32:56 [minio-client] [request]	status:200	cost:6.230025ms	addr:            ::1	method:GET	url:/resources?page=1&limit=20
+2022/09/29 19:33:47 [minio-client] [request]	status:201	cost:20.61453ms	addr:            ::1	method:POST	url:/resources
+2022/09/29 19:33:49 [minio-client] [request]	status:201	cost:20.627959ms	addr:            ::1	method:POST	url:/resources
+2022/09/29 19:33:56 [minio-client] [request]	status:200	cost:5.252975ms	addr:            ::1	method:GET	url:/resources/count
+2022/09/29 19:34:04 [minio-client] [request]	status:201	cost:27.056807ms	addr:            ::1	method:POST	url:/resources
+2022/09/29 19:34:07 [minio-client] [request]	status:200	cost:2.148234ms	addr:            ::1	method:GET	url:/resources/count
+2022/09/29 19:34:10 [minio-client] [request]	status:200	cost:2.724122ms	addr:            ::1	method:GET	url:/resources?page=1&limit=20
+2022/09/29 19:34:18 [minio-client] [request]	status:200	cost:9.280135ms	addr:            ::1	method:GET	url:/resources/3
+2022/09/29 19:34:22 [minio-client] [request]	status:404	cost:5.223777ms	addr:            ::1	method:GET	url:/resources/6
+2022/09/29 19:34:27 [minio-client] [request]	status:200	cost:14.195083ms	addr:            ::1	method:GET	url:/resources/3
+2022/09/29 19:35:22 [minio-client] [request]	status:404	cost:6.772755ms	addr:            ::1	method:PATCH	url:/resources/5
+2022/09/29 19:35:25 [minio-client] [request]	status:204	cost:28.492764ms	addr:            ::1	method:PATCH	url:/resources/1
+2022/09/29 19:35:29 [minio-client] [request]	status:200	cost:4.976958ms	addr:            ::1	method:GET	url:/resources?page=1&limit=20
+2022/09/29 19:35:33 [minio-client] [request]	status:204	cost:14.218706ms	addr:            ::1	method:DELETE	url:/resources/1
+2022/09/29 19:35:34 [minio-client] [request]	status:404	cost:10.093364ms	addr:            ::1	method:DELETE	url:/resources/1
+2022/09/29 19:35:38 [minio-client] [request]	status:200	cost:2.316273ms	addr:            ::1	method:GET	url:/resources?page=1&limit=20
+2022/09/29 19:35:43 [minio-client] [request]	status:404	cost:5.709363ms	addr:            ::1	method:GET	url:/resources/1

@@ -39,15 +39,11 @@ func (repository *ResourcesRepository) GetResource(id uint) (*entities.Resource,
 }
 
 // GetResources 获得资源列表
-func (repository *ResourcesRepository) GetResources(limit int, offset int, filter string) ([]entities.Resource, error) {
+func (repository *ResourcesRepository) GetResources(limit int, offset int) ([]entities.Resource, error) {
 	var err error
 	var resources []entities.Resource
-
-	db := repository.db
-	if filter != "" {
-		db = db.Where("state = ?", filter)
-	}
-	if result := db.Order("updated_at desc").Limit(limit).Offset(offset).Find(&resources); result.Error != nil {
+	
+	if result := repository.db.Order("updated_at desc").Limit(limit).Offset(offset).Find(&resources); result.Error != nil {
 		err = multierror.Append(err, fmt.Errorf("failed to get resources : %s", result.Error))
 	}
 
