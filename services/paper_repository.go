@@ -47,7 +47,7 @@ func (repository *PapersRepository) GetPapers(limit int, offset int, filter stri
 	if filter != "" {
 		db = db.Where("state = ?", filter)
 	}
-	if result := db.Order("updated_at desc").Limit(limit).Offset(offset).Find(&papers); result.Error != nil {
+	if result := db.Order("published_at desc").Limit(limit).Offset(offset).Find(&papers); result.Error != nil {
 		err = multierror.Append(err, fmt.Errorf("failed to get papers : %s", result.Error))
 	}
 
