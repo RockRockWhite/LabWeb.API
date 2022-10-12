@@ -5,8 +5,10 @@ go 1.19
 require (
 	github.com/evanphx/json-patch/v5 v5.6.0
 	github.com/gin-gonic/gin v1.8.1
+	github.com/go-redis/redis/v9 v9.0.0-beta.2
 	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/sirupsen/logrus v1.9.0
+	github.com/hashicorp/go-multierror v1.1.1
+	github.com/petersunbag/coven v1.0.0
 	github.com/spf13/viper v1.12.0
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.8
@@ -20,11 +22,9 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
-	github.com/go-redis/redis/v9 v9.0.0-beta.2 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
-	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
@@ -37,7 +37,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.3 // indirect
-	github.com/petersunbag/coven v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
