@@ -98,7 +98,7 @@ func GetTodos(c *gin.Context) {
 		return
 	}
 
-	entities, err := todoRepository.GetTodosList(limit, (page-1)*limit)
+	entities, err := todoRepository.GetTodosList(limit, (page-1)*limit, "")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -195,6 +195,60 @@ func CountTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, struct {
 		Count int64
 	}{
-		Count: todoRepository.Count(),
+		Count: todoRepository.Count(""),
 	})
+}
+
+// CountTodosSelf 获得自己创建的todo数量
+func CountTodosSelf(c *gin.Context) {
+	// 获得用户信息
+	claims := c.MustGet("claims").(*utils.JwtClaims)
+
+	c.JSON(http.StatusOK, struct {
+		Count int64
+	}{
+		Count: todoRepository.Count(strconv.Itoa(int(claims.Id))),
+	})
+}
+
+// GetTodosSelf 批量获得自己创建的todo列表
+func GetTodosSelf(c *gin.Context) {
+	// 获得page limit
+	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if pageQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field page",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	// 获得用户信息
+	claims := c.MustGet("claims").(*utils.JwtClaims)
+
+	limit, limitQueryErr := strconv.Atoi(c.DefaultQuery("limit", "20"))
+	if limitQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field limit.",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	entities, err := todoRepository.GetTodosList(limit, (page-1)*limit, strconv.Itoa(int(claims.Id)))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	// 转换为Dto
+	getDtos := make([]dtos.TodoGetDto, 0, len(entities))
+	for _, entity := range entities {
+		var each dtos.TodoGetDto
+		dtos.GetTodoGetDtoConverter().Convert(&each, &entity)
+		getDtos = append(getDtos, each)
+	}
+
+	c.JSON(http.StatusOK, getDtos)
 }
