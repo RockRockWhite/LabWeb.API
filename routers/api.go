@@ -1,10 +1,16 @@
 package routers
 
 import (
+	"fmt"
 	"github.com/RockRockWhite/LabWeb.API/controllers"
+	"github.com/RockRockWhite/LabWeb.API/dtos"
 	"github.com/RockRockWhite/LabWeb.API/middlewares"
+	"github.com/RockRockWhite/LabWeb.API/services"
 	"github.com/RockRockWhite/LabWeb.API/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
+	"net/http"
+	"strconv"
 )
 
 func InitApiRouter() *gin.Engine {
@@ -88,12 +94,55 @@ func InitApiRouter() *gin.Engine {
 
 	todos := router.Group("/todos")
 	{
-		todos.GET("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetTodo)
+		todos.GET("/:id", middlewares.JwtAuth(middlewares.Role_Admin|middlewares.Role_Cond, func(c *gin.Context) bool {
+			id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
+
+			if !services.GetTodoRepository().TodoExists(uint(id)) {
+				c.JSON(http.StatusNotFound, dtos.ErrorDto{
+					Message:          fmt.Sprintf("Todo %v not found!", id),
+					DocumentationUrl: viper.GetString("Document.Url"),
+				})
+				return false
+			}
+			entity, _ := services.GetTodoRepository().GetTodo(uint(id))
+			claims := c.MustGet("claims").(*utils.JwtClaims)
+			return entity.UserId == claims.Id
+		}), controllers.GetTodo)
 		todos.GET("/count", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.CountTodos)
 		todos.GET("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetTodos)
 		todos.POST("", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.AddTodos)
-		todos.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchTodo)
-		todos.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.DeleteTodo)
+		todos.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin|middlewares.Role_Cond, func(c *gin.Context) bool {
+			id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
+
+			if !services.GetTodoRepository().TodoExists(uint(id)) {
+				c.JSON(http.StatusNotFound, dtos.ErrorDto{
+					Message:          fmt.Sprintf("Todo %v not found!", id),
+					DocumentationUrl: viper.GetString("Document.Url"),
+				})
+				return false
+			}
+			entity, _ := services.GetTodoRepository().GetTodo(uint(id))
+			claims := c.MustGet("claims").(*utils.JwtClaims)
+			return entity.UserId == claims.Id
+		}), controllers.PatchTodo)
+		todos.DELETE("/:id", middlewares.JwtAuth(middlewares.Role_Admin|middlewares.Role_Cond, func(c *gin.Context) bool {
+			id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
+
+			if !services.GetTodoRepository().TodoExists(uint(id)) {
+				c.JSON(http.StatusNotFound, dtos.ErrorDto{
+					Message:          fmt.Sprintf("Todo %v not found!", id),
+					DocumentationUrl: viper.GetString("Document.Url"),
+				})
+				return false
+			}
+			entity, _ := services.GetTodoRepository().GetTodo(uint(id))
+			claims := c.MustGet("claims").(*utils.JwtClaims)
+			return entity.UserId == claims.Id
+		}), controllers.DeleteTodo)
+
+		todos.GET("/self/count", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.CountTodos)
+		todos.GET("/self", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.GetTodos)
+
 	}
 
 	return router

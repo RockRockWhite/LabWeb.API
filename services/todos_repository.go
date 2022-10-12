@@ -39,10 +39,15 @@ func (repository *TodosRepository) GetTodo(id uint) (*entities.Todo, error) {
 }
 
 // GetTodosList 获得todo列表
-func (repository *TodosRepository) GetTodosList(limit int, offset int) ([]entities.Todo, error) {
+func (repository *TodosRepository) GetTodosList(limit int, offset int, filter string) ([]entities.Todo, error) {
 	var err error
 	var todos []entities.Todo
-	if result := repository.db.Order("updated_at desc").Limit(limit).Offset(offset).Find(&todos); result.Error != nil {
+	db := repository.db.Order("updated_at desc")
+	if filter != "" {
+		db = db.Where("user_id = ?", filter)
+	}
+
+	if result := db.Limit(limit).Offset(offset).Find(&todos); result.Error != nil {
 		err = multierror.Append(err, fmt.Errorf("failed to get todos : %s", result.Error))
 	}
 
@@ -90,9 +95,14 @@ func (repository *TodosRepository) TodoExists(id uint) bool {
 }
 
 // Count 返回数量
-func (repository *TodosRepository) Count() int64 {
+func (repository *TodosRepository) Count(filter string) int64 {
 	var count int64
-	repository.db.Model(&entities.Todo{}).Count(&count)
+	db := repository.db.Model(&entities.Todo{})
+
+	if filter != "" {
+		db = db.Where("user_id = ?", filter)
+	}
+	db.Count(&count)
 
 	return count
 }
