@@ -140,9 +140,8 @@ func InitApiRouter() *gin.Engine {
 			return entity.UserId == claims.Id
 		}), controllers.DeleteTodo)
 
-		todos.GET("/self/count", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.CountTodos)
-		todos.GET("/self", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.GetTodos)
-
+		todos.GET("/self/count", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.CountTodosSelf)
+		todos.GET("/self", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.GetTodosSelf)
 	}
 
 	return router
