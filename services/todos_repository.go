@@ -23,7 +23,7 @@ func init() {
 	_todosRepository = &TodosRepository{db}
 }
 
-func GetTodosRepository() *TodosRepository {
+func GetTodoRepository() *TodosRepository {
 	return _todosRepository
 }
 

@@ -15,7 +15,7 @@ type TodoAddDto struct {
 	To          time.Time `gorm:"not null"` // 完成时间
 }
 
-func GetTodosAddDtoConverter() *coven.Converter {
+func GetTodoAddDtoConverter() *coven.Converter {
 	converter, err := coven.NewConverter(entities.Todo{}, TodoAddDto{})
 	if err != nil {
 		utils.GetLogger().Fatalln("failed to new converter of TodoAddDto.")
