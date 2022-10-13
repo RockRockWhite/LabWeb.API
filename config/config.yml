@@ -27,3 +27,7 @@ Jwt:
 
 Document:
   Url: "https://github.com/RockRockWhite/"
+
+Admin:
+    Username: "markpolo"
+    Password: "markpolo"
