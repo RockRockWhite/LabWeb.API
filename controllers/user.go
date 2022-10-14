@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"net/http"
+	"strconv"
 )
 
 var usersRepository *services.UsersRepository
@@ -66,6 +67,45 @@ func GetUser(c *gin.Context) {
 
 	// 转换为Dto
 	c.JSON(http.StatusOK, dtos.ParseUserEntity(user))
+}
+
+// GetUsers 批量获得用户
+func GetUsers(c *gin.Context) {
+	// 获得page limit
+	page, pageQueryErr := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if pageQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field page",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	limit, limitQueryErr := strconv.Atoi(c.DefaultQuery("limit", "20"))
+	filter := services.UserFilter(c.DefaultQuery("filter", "all"))
+
+	if limitQueryErr != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Incorrect query field limit.",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	entities, err := usersRepository.GetUsers(limit, (page-1)*limit, filter)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+	// 转换为Dto
+	getDtos := make([]dtos.UserGetDto, 0, len(entities))
+	for _, entity := range entities {
+		getDtos = append(getDtos, *dtos.ParseUserEntity(&entity))
+	}
+
+	c.JSON(http.StatusOK, getDtos)
 }
 
 // PatchUser 修改用户
@@ -137,4 +177,15 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 	c.Status(http.StatusNoContent)
+}
+
+// CountUser 获得用户数量
+func CountUser(c *gin.Context) {
+	filter := services.UserFilter(c.DefaultQuery("filter", "all"))
+
+	c.JSON(http.StatusOK, struct {
+		Count int64
+	}{
+		Count: usersRepository.Count(filter),
+	})
 }

@@ -106,6 +106,23 @@ func (repository *UsersRepository) UsernameExists(username string) bool {
 	return result.RowsAffected >= 1
 }
 
+// Count 返回数量
+func (repository *UsersRepository) Count(filter UserFilter) int64 {
+	var count int64
+
+	db := repository.db
+	switch filter {
+	case UserFilter_Admin:
+		db = db.Where("is_admin = ?", true)
+	case UserFilter_NoAdmin:
+		db = db.Where("is_admin = ?", false)
+	}
+
+	db.Model(&entities.User{}).Count(&count)
+
+	return count
+}
+
 type UserFilter string
 
 const (
