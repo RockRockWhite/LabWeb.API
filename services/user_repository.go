@@ -39,6 +39,27 @@ func (repository *UsersRepository) GetUserByName(username string) (*entities.Use
 	return &user, err
 }
 
+// GetUsers 获得用户列表
+func (repository *UsersRepository) GetUsers(limit int, offset int, filter UserFilter) ([]entities.User, error) {
+	var err error
+	var users []entities.User
+
+	db := repository.db
+
+	switch filter {
+	case UserFilter_Admin:
+		db = db.Where("is_admin = ?", true)
+	case UserFilter_NoAdmin:
+		db = db.Where("is_admin = ?", false)
+	}
+
+	if result := db.Limit(limit).Offset(offset).Find(&users); result.Error != nil {
+		err = multierror.Append(err, fmt.Errorf("failed to get users : %s", result.Error))
+	}
+
+	return users, err
+}
+
 // AddUser 添加用户
 func (repository *UsersRepository) AddUser(user *entities.User) (uint, error) {
 	var err error
@@ -84,3 +105,11 @@ func (repository *UsersRepository) UsernameExists(username string) bool {
 
 	return result.RowsAffected >= 1
 }
+
+type UserFilter string
+
+const (
+	UserFilter_Admin   UserFilter = "admin"
+	UserFilter_NoAdmin UserFilter = "no_admin"
+	UserFilter_All     UserFilter = "all"
+)
