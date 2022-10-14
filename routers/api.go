@@ -33,6 +33,13 @@ func InitApiRouter() *gin.Engine {
 				claims := c.MustGet("claims").(*utils.JwtClaims)
 				return username == claims.Username
 			}), controllers.PatchUser)
+		user.PATCH(
+			"/:username/password",
+			middlewares.JwtAuth(middlewares.Role_Cond, func(c *gin.Context) bool {
+				username := c.Param("username")
+				claims := c.MustGet("claims").(*utils.JwtClaims)
+				return username == claims.Username
+			}), controllers.PatchPassword)
 		user.DELETE("/:username",
 			middlewares.JwtAuth(middlewares.Role_Admin|middlewares.Role_Cond, func(c *gin.Context) bool {
 				username := c.Param("username")

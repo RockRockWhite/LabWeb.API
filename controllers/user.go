@@ -160,6 +160,56 @@ func PatchUser(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
+// PatchPassword 修改用户密码
+func PatchPassword(c *gin.Context) {
+	// 获得更新id
+	username := c.Param("username")
+	if !usersRepository.UsernameExists(username) {
+		c.JSON(http.StatusNotFound, dtos.ErrorDto{
+			Message:          fmt.Sprintf("User %v not found!", username),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	var passwordDto dtos.UserPasswordDto
+
+	if err := c.ShouldBind(&passwordDto); err != nil {
+		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
+			Message:          "Bind Model Error",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	user, err := usersRepository.GetUserByName(username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	// 验证密码
+	if !utils.ValifyPasswordHash(passwordDto.OldPassword, user.Salt, user.PasswordHash) {
+		c.JSON(http.StatusForbidden, dtos.ErrorDto{
+			Message:          "Password Error",
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	// 修改密码
+	user.PasswordHash = utils.EncryptPasswordHash(passwordDto.Password, user.Salt)
+
+	// 更新数据库
+	err = usersRepository.UpdateUser(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}
+
 // DeleteUser 删除用户
 func DeleteUser(c *gin.Context) {
 	username := c.Param("username")
