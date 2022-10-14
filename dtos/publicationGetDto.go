@@ -31,6 +31,8 @@ func ParsePaperEntity(p *entities.Paper) *PaperGetDto {
 		State:       p.State,
 		PublishedAt: p.PublishedAt,
 		PublishedIn: p.PublishedIn,
+		CreatedAt:   p.CreatedAt,
+		UpdatedAt:   p.UpdatedAt,
 	}
 
 	return &dto
