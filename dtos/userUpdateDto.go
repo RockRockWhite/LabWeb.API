@@ -8,6 +8,7 @@ import (
 // UserUpdateDto 添加用户Dto
 type UserUpdateDto struct {
 	Username  string // 昵称
+	Fullname  string // 实验室成员全名
 	Password  string // 密码
 	Email     string // 邮箱
 	Telephone string // 手机号码
@@ -19,6 +20,7 @@ type UserUpdateDto struct {
 func UserUpdateDtoFromEntity(user *entities.User) *UserUpdateDto {
 	return &UserUpdateDto{
 		Username:  user.Username,
+		Fullname:  user.Fullname,
 		Password:  "",
 		Email:     user.Email,
 		Telephone: user.Telephone,
@@ -30,6 +32,7 @@ func UserUpdateDtoFromEntity(user *entities.User) *UserUpdateDto {
 // ApplyUpdateToEntity 将Update应用到Entity
 func (dto *UserUpdateDto) ApplyUpdateToEntity(entity *entities.User) {
 	entity.Username = dto.Username
+	entity.Fullname = dto.Fullname
 	// 计算密码盐值
 	if dto.Password != "" {
 		entity.PasswordHash = utils.EncryptPasswordHash(dto.Password, entity.Salt)
