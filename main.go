@@ -31,6 +31,7 @@ func InitAdmin() {
 			Password: password,
 		}
 		entity := userDto.ToEntity()
+		entity.IsAdmin = true
 
 		_, err := services.GetUsersRepository().AddUser(entity)
 		if err != nil {
