@@ -112,6 +112,18 @@ func GetTodos(c *gin.Context) {
 	for _, entity := range entities {
 		var each dtos.TodoGetDto
 		dtos.GetTodoGetDtoConverter().Convert(&each, &entity)
+
+		user, err := usersRepository.GetUserById(entity.UserId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+				Message:          err.Error(),
+				DocumentationUrl: viper.GetString("Document.Url"),
+			})
+			return
+		}
+
+		each.Username = user.Username
+		each.Fullname = user.Fullname
 		getDtos = append(getDtos, each)
 	}
 

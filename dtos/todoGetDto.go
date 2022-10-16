@@ -15,6 +15,8 @@ type TodoGetDto struct {
 	To          time.Time `gorm:"not null"` // 完成时间
 	Finished    bool      // 完成状态
 	UserId      uint      `gorm:"not null"` // 创建用户Id
+	Username    string    // 昵称
+	Fullname    string    // 实验室成员全名
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }

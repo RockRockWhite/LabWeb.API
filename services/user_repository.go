@@ -27,6 +27,18 @@ func GetUsersRepository() *UsersRepository {
 	return _usersRepository
 }
 
+// GetUserById 通过Id获得信息
+func (repository *UsersRepository) GetUserById(id uint) (*entities.User, error) {
+	var err error
+	var user entities.User
+
+	if result := repository.db.First(&user, id); result.Error != nil {
+		err = multierror.Append(err, fmt.Errorf("failed to get user: %v, error: %s", id, err.Error()))
+	}
+
+	return &user, err
+}
+
 // GetUserByName 通过用户名获得信息
 func (repository *UsersRepository) GetUserByName(username string) (*entities.User, error) {
 	var err error
