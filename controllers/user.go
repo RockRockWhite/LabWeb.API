@@ -141,15 +141,6 @@ func PatchUser(c *gin.Context) {
 	utils.ApplyJsonPatch(dto, patchJson)
 	dto.ApplyUpdateToEntity(user)
 
-	// 保证用户名不重复
-	if usersRepository.UsernameExists(user.Username) {
-		c.JSON(http.StatusBadRequest, dtos.ErrorDto{
-			Message:          fmt.Sprintf("Username %v exists", user.Username),
-			DocumentationUrl: viper.GetString("Document.Url"),
-		})
-		return
-	}
-
 	// 更新数据库
 	err = usersRepository.UpdateUser(user)
 	if err != nil {
