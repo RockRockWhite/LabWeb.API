@@ -23,7 +23,7 @@ func InitApiRouter() *gin.Engine {
 	user := router.Group("/users")
 	{
 		user.GET("/:username", controllers.GetUser)
-		user.GET("/", controllers.GetUsers)
+		user.GET("", controllers.GetUsers)
 		user.GET("/count", controllers.CountUser)
 		user.POST("", controllers.AddUser)
 		user.PATCH(
