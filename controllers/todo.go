@@ -97,8 +97,9 @@ func GetTodos(c *gin.Context) {
 		})
 		return
 	}
+	filter := c.DefaultQuery("filter", "")
 
-	entities, err := todoRepository.GetTodosList(limit, (page-1)*limit, "")
+	entities, err := todoRepository.GetTodosList(limit, (page-1)*limit, filter)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -192,10 +193,11 @@ func DeleteTodo(c *gin.Context) {
 
 // CountTodos 获得todo数量
 func CountTodos(c *gin.Context) {
+	filter := c.DefaultQuery("filter", "")
 	c.JSON(http.StatusOK, struct {
 		Count int64
 	}{
-		Count: todoRepository.Count(""),
+		Count: todoRepository.Count(filter),
 	})
 }
 
