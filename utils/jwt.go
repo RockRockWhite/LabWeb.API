@@ -9,6 +9,7 @@ import (
 type JwtClaims struct {
 	Id          uint   // 用户id
 	Username    string // 昵称
+	Fullname    string // 实验室成员全名
 	Email       string // 邮箱
 	VerifyState bool   // 邮箱验证状态
 	Telephone   string // 手机号码
