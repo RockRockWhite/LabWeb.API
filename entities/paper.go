@@ -14,6 +14,8 @@ type Paper struct {
 	Authors        string     // 论文作者
 	Thumbnail      string     // 论文缩略图
 	Link           string     // 论文链接
+	Pdf            string     // 论文pdf
+	Code           string     // 论文代码
 	State          PaperState // 论文状态 枚举
 	PublishedAt    time.Time  // 发布时间
 	PublishedIn    string     `gorm:"default:null"` // 发表单位

@@ -34,3 +34,6 @@ LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf
 2022/10/16 20:43:10 [minio-client] ======LabWeb.API START======
 2022/10/16 20:43:10 [minio-client] Fatal error open database:%s %s 
 LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host
+2022/10/17 08:31:45 [minio-client] ======LabWeb.API START======
+2022/10/17 08:31:45 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host

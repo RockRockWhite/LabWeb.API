@@ -11,6 +11,8 @@ type PaperUpdateDto struct {
 	Abstract    string              // 论文简介 富文本
 	Thumbnail   string              // 论文缩略图
 	Link        string              // 论文链接
+	Pdf         string              // 论文pdf
+	Code        string              // 论文代码
 	Authors     string              // 论文作者
 	State       entities.PaperState // 论文状态 枚举
 	PublishedAt time.Time           // 发布时间
@@ -24,6 +26,8 @@ func PaperDtoFromEntity(p *entities.Paper) *PaperUpdateDto {
 		Abstract:    p.Abstract,
 		Thumbnail:   p.Thumbnail,
 		Link:        p.Link,
+		Pdf:         p.Pdf,
+		Code:        p.Code,
 		Authors:     p.Authors,
 		State:       p.State,
 		PublishedAt: p.PublishedAt,
