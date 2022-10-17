@@ -41,6 +41,8 @@ func (dto *PaperUpdateDto) ApplyUpdateToEntity(entity *entities.Paper, lastModif
 	entity.Abstract = dto.Abstract
 	entity.Thumbnail = dto.Thumbnail
 	entity.Link = dto.Link
+	entity.Pdf = dto.Pdf
+	entity.Code = dto.Code
 	entity.Authors = dto.Authors
 	entity.State = dto.State
 	entity.PublishedAt = dto.PublishedAt
