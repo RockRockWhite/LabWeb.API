@@ -42,7 +42,7 @@ func (repository *TodosRepository) GetTodo(id uint) (*entities.Todo, error) {
 func (repository *TodosRepository) GetTodosList(limit int, offset int, filter string) ([]entities.Todo, error) {
 	var err error
 	var todos []entities.Todo
-	db := repository.db.Order("updated_at desc")
+	db := repository.db.Order("created_at desc")
 	if filter != "" {
 		db = db.Where("user_id = ?", filter)
 	}
