@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/evanphx/json-patch/v5 v5.6.0
 	github.com/gin-gonic/gin v1.8.1
-	github.com/go-redis/redis/v9 v9.0.0-beta.2
+	github.com/go-redis/redis/v9 v9.0.0-rc.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/petersunbag/coven v1.0.0
