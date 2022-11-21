@@ -10,7 +10,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/petersunbag/coven v1.0.0
 	github.com/spf13/viper v1.12.0
-	gorm.io/driver/mysql v1.3.6
+	gorm.io/driver/mysql v1.4.4
 	gorm.io/gorm v1.23.8
 )
 
