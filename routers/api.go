@@ -155,7 +155,7 @@ func InitApiRouter() *gin.Engine {
 
 	hits := router.Group("/hits")
 	{
-		hits.PUT("", controllers.PutHit)
+		hits.GET("", controllers.PutHit)
 	}
 
 	return router
