@@ -37,3 +37,26 @@ LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf
 2022/10/17 08:31:45 [minio-client] ======LabWeb.API START======
 2022/10/17 08:31:45 [minio-client] Fatal error open database:%s %s 
 LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host
+2022/11/24 20:57:41 [minio-client] ======LabWeb.API START======
+2022/11/24 20:57:41 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host
+2022/11/24 20:57:56 [minio-client] ======LabWeb.API START======
+2022/11/24 20:57:56 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp: lookup labwebdb: no such host
+2022/11/24 20:58:09 [minio-client] ======LabWeb.API START======
+2022/11/24 20:58:09 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp [::1]:3306: connect: connection refused
+2022/11/24 20:59:26 [minio-client] ======LabWeb.API START======
+2022/11/24 20:59:33 [minio-client] ======LabWeb.API START======
+2022/11/24 20:59:38 [minio-client] ======LabWeb.API START======
+2022/11/24 21:00:35 [minio-client] ======LabWeb.API START======
+2022/11/24 21:07:55 [minio-client] ======LabWeb.API START======
+2022/11/24 21:07:58 [minio-client] ======LabWeb.API START======
+2022/11/24 21:07:59 [minio-client] ======LabWeb.API START======
+2022/11/24 21:08:00 [minio-client] ======LabWeb.API START======
+2022/11/24 21:08:02 [minio-client] ======LabWeb.API START======
+2022/11/24 21:09:06 [minio-client] ======LabWeb.API START======
+2022/11/24 21:09:07 [minio-client] ======LabWeb.API START======
+2022/11/24 21:10:44 [minio-client] ======LabWeb.API START======
+2022/11/24 21:10:44 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp [::1]:3306: connect: connection refused

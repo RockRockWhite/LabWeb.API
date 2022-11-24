@@ -153,5 +153,10 @@ func InitApiRouter() *gin.Engine {
 		todos.GET("/self", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.GetTodosSelf)
 	}
 
+	hits := router.Group("/hits")
+	{
+		hits.PUT("", controllers.PutHit)
+	}
+
 	return router
 }
