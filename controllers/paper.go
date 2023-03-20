@@ -96,7 +96,10 @@ func GetPapers(c *gin.Context) {
 		return
 	}
 
-	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, "")
+	// 获得year_filter
+	yearFilter := c.DefaultQuery("year_filter", "")
+
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, "", yearFilter)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -133,7 +136,10 @@ func GetPapersPublic(c *gin.Context) {
 		return
 	}
 
-	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Public)))
+	// 获得year_filter
+	yearFilter := c.DefaultQuery("year_filter", "")
+
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Public)), yearFilter)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -170,7 +176,10 @@ func GetPapersHighlight(c *gin.Context) {
 		return
 	}
 
-	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Public|_entities.PaperState_Highlight)))
+	// 获得year_filter
+	yearFilter := c.DefaultQuery("year_filter", "")
+
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Public|_entities.PaperState_Highlight)), yearFilter)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),
@@ -207,7 +216,10 @@ func GetPapersPrivate(c *gin.Context) {
 		return
 	}
 
-	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Private)))
+	// 获得year_filter
+	yearFilter := c.DefaultQuery("year_filter", "")
+
+	entities, err := papersRepository.GetPapers(limit, (page-1)*limit, strconv.Itoa(int(_entities.PaperState_Private)), yearFilter)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
 			Message:          err.Error(),

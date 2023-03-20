@@ -39,7 +39,7 @@ func (repository *PapersRepository) GetPaper(id uint) (*entities.Paper, error) {
 }
 
 // GetPapers 获得论文列表
-func (repository *PapersRepository) GetPapers(limit int, offset int, filter string) ([]entities.Paper, error) {
+func (repository *PapersRepository) GetPapers(limit int, offset int, filter string, year_filter string) ([]entities.Paper, error) {
 	var err error
 	var papers []entities.Paper
 
@@ -47,6 +47,11 @@ func (repository *PapersRepository) GetPapers(limit int, offset int, filter stri
 	if filter != "" {
 		db = db.Where("state & ? = ?", filter)
 	}
+
+	if year_filter != "" {
+		db = db.Where("year(published_at) = ?", year_filter)
+	}
+
 	if result := db.Order("published_at desc").Limit(limit).Offset(offset).Find(&papers); result.Error != nil {
 		err = multierror.Append(err, fmt.Errorf("failed to get papers : %s", result.Error))
 	}
