@@ -32,4 +32,5 @@ type PaperState int
 const (
 	PaperState_Private PaperState = iota
 	PaperState_Public
+	PaperState_Highlight = 2 // 精华帖
 )

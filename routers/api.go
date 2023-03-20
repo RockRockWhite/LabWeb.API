@@ -59,6 +59,7 @@ func InitApiRouter() *gin.Engine {
 		paper.GET("/count", controllers.CountPaper)
 		paper.GET("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.GetPapers)
 		paper.GET("/public", controllers.GetPapersPublic)
+		paper.GET("/highlight", controllers.GetPapersHighlight)
 		paper.GET("/private", middlewares.JwtAuth(middlewares.Role_All, nil), controllers.GetPapersPrivate)
 		paper.POST("", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.AddPaper)
 		paper.PATCH("/:id", middlewares.JwtAuth(middlewares.Role_Admin, nil), controllers.PatchPaper)
