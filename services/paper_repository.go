@@ -39,17 +39,21 @@ func (repository *PapersRepository) GetPaper(id uint) (*entities.Paper, error) {
 }
 
 // GetPapers 获得论文列表
-func (repository *PapersRepository) GetPapers(limit int, offset int, filter string, year_filter string) ([]entities.Paper, error) {
+func (repository *PapersRepository) GetPapers(limit int, offset int, filter string, yearFilter string) ([]entities.Paper, error) {
 	var err error
 	var papers []entities.Paper
 
 	db := repository.db
 	if filter != "" {
-		db = db.Where("state & ? = ?", filter, filter)
+		if filter != "0" {
+			db = db.Where("state & ? = ?", filter, filter)
+		} else {
+			db = db.Where("state = ?", filter)
+		}
 	}
 
-	if year_filter != "" {
-		db = db.Where("year(published_at) = ?", year_filter)
+	if yearFilter != "" {
+		db = db.Where("year(published_at) = ?", yearFilter)
 	}
 
 	if result := db.Order("published_at desc").Limit(limit).Offset(offset).Find(&papers); result.Error != nil {
