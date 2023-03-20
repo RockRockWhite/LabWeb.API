@@ -45,7 +45,7 @@ func (repository *PapersRepository) GetPapers(limit int, offset int, filter stri
 
 	db := repository.db
 	if filter != "" {
-		db = db.Where("state & ? = ?", filter)
+		db = db.Where("state & ? = ?", filter, filter)
 	}
 
 	if year_filter != "" {

@@ -60,3 +60,6 @@ LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=ut
 2022/11/24 21:10:44 [minio-client] ======LabWeb.API START======
 2022/11/24 21:10:44 [minio-client] Fatal error open database:%s %s 
 LABWEBLABWEB:LabWebSampleSosd23333@tcp(localhost:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdial tcp [::1]:3306: connect: connection refused
+2023/03/20 21:40:07 [minio-client] ======LabWeb.API START======
+2023/03/20 21:40:10 [minio-client] Fatal error open database:%s %s 
+LABWEBLABWEB:LabWebSampleSosd23333@tcp(labwebdb:3306)/lab_web_sample?charset=utf8mb4&parseTime=True&loc=Localdriver: bad connection
