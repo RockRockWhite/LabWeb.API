@@ -116,6 +116,62 @@ func GetPapers(c *gin.Context) {
 	c.JSON(http.StatusOK, getDtos)
 }
 
+// GetPaperYears 获得论文年份
+func GetPaperYears(c *gin.Context) {
+	entities, err := papersRepository.GetPaperYears("")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, entities)
+}
+
+// GetPublicPaperYears 获得公开论文年份
+func GetPublicPaperYears(c *gin.Context) {
+	entities, err := papersRepository.GetPaperYears(strconv.Itoa(int(_entities.PaperState_Public)))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, entities)
+}
+
+// GetPrivatePaperYears 获得私有论文年份
+func GetPrivatePaperYears(c *gin.Context) {
+	entities, err := papersRepository.GetPaperYears(strconv.Itoa(int(_entities.PaperState_Private)))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, entities)
+}
+
+// GetHighlightPaperYears 获得精华论文年份
+func GetHighlightPaperYears(c *gin.Context) {
+	entities, err := papersRepository.GetPaperYears(strconv.Itoa(int(_entities.PaperState_Highlight)))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dtos.ErrorDto{
+			Message:          err.Error(),
+			DocumentationUrl: viper.GetString("Document.Url"),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, entities)
+}
+
 // GetPapersPublic 批量获得公开论文
 func GetPapersPublic(c *gin.Context) {
 	// 获得page limit

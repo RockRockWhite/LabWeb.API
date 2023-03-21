@@ -63,6 +63,27 @@ func (repository *PapersRepository) GetPapers(limit int, offset int, filter stri
 	return papers, err
 }
 
+// GetPaperYears 获得论文年份列表
+func (repository *PapersRepository) GetPaperYears(filter string) ([]string, error) {
+	var err error
+	var years []string
+
+	db := repository.db.Model(entities.Paper{})
+	if filter != "" {
+		if filter != "0" {
+			db = db.Where("state & ? = ?", filter, filter)
+		} else {
+			db = db.Where("state = ?", filter)
+		}
+	}
+
+	if result := db.Select("distinct year(published_at)").Order("year(published_at) desc").Find(&years); result.Error != nil {
+		err = multierror.Append(err, fmt.Errorf("failed to get papers : %s", result.Error))
+	}
+
+	return years, err
+}
+
 // AddPaper 创建论文
 func (repository *PapersRepository) AddPaper(paper *entities.Paper) (uint, error) {
 	var err error
