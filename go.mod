@@ -10,8 +10,8 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/petersunbag/coven v1.0.0
 	github.com/spf13/viper v1.12.0
-	gorm.io/driver/mysql v1.3.6
-	gorm.io/gorm v1.24.6
+	gorm.io/driver/mysql v1.5.1
+	gorm.io/gorm v1.25.1
 )
 
 require (
@@ -22,7 +22,7 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
+	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
