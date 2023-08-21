@@ -11,7 +11,7 @@ require (
 	github.com/petersunbag/coven v1.0.0
 	github.com/spf13/viper v1.12.0
 	gorm.io/driver/mysql v1.3.6
-	gorm.io/gorm v1.25.2
+	gorm.io/gorm v1.25.4
 )
 
 require (
